@@ -1,0 +1,21 @@
+{
+  "name": "psydecode-site",
+  "version": "1.0.0",
+  "description": "Plateforme web officielle pour le compte PsyDécode - Psychologie, séduction, charisme et décodage",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "psydecode",
+    "psychologie",
+    "seduction",
+    "tiktok"
+  ],
+  "author": "PsyDécode",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^13.0.3"
+  }
+}

@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment variables & secrets
+.env
+.env.*
+*.env
+
+# SQLite local databases & write-ahead logs (DO NOT COMMIT SENSITIVE DB)
+data/*.db
+data/*.db-wal
+data/*.db-shm
+*.db
+*.sqlite
+*.sqlite3
+
+# Operating System & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+
+# Scratch scripts
+scratch/
+temp/

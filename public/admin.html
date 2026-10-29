@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panneau d'Administration Intégral — PsyDécode</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body { background: #0c0a08; color: #eee; font-family: 'DM Sans', sans-serif; }
+    
+    /* Top Bar */
+    .admin-nav {
+      background: #14100c;
+      border-bottom: 1px solid rgba(184,130,30,0.25);
+      padding: 16px var(--px);
+      display: flex; justify-content: space-between; align-items: center;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .admin-title {
+      font-family: 'Playfair Display', serif; font-size: 21px; color: #E8A93C;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .admin-links a {
+      color: #aaa; font-size: 13px; text-decoration: none; padding: 6px 12px;
+      border-radius: 4px; border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.2s;
+    }
+    .admin-links a:hover { color: #fff; border-color: #B8821E; }
+
+    .admin-container {
+      max-width: 1340px;
+      margin: 30px auto 80px;
+      padding: 0 var(--px);
+    }
+
+    /* Tabs */
+    .admin-tabs-bar {
+      display: flex; gap: 8px; margin-bottom: 30px; border-bottom: 1px solid #241c14;
+      padding-bottom: 12px; overflow-x: auto;
+    }
+    .tab-btn {
+      background: #181410; border: 1px solid rgba(184,130,30,0.2); color: #aaa;
+      padding: 10px 18px; border-radius: 6px; font-size: 13.5px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .tab-btn:hover { color: #fff; border-color: #B8821E; }
+    .tab-btn.active { background: #B8821E; color: #111; font-weight: 700; border-color: #B8821E; }
+
+    /* Panels */
+    .admin-tab-content { display: none; }
+    .admin-tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+
+    /* KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 35px;
+    }
+    .kpi-card {
+      background: #16120e; border: 1px solid rgba(184,130,30,0.2);
+      border-radius: 10px; padding: 22px;
+    }
+    .kpi-card .kpi-label { font-size: 11.5px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+    .kpi-card .kpi-val { font-size: 32px; font-weight: 700; color: #E8A93C; margin: 8px 0 4px; font-family: 'Playfair Display', serif; }
+    .kpi-card .kpi-sub { font-size: 12px; color: #4ade80; }
+
+    /* Panels & Tables */
+    .panel-box {
+      background: #14100c; border: 1px solid rgba(184,130,30,0.25); border-radius: 12px;
+      padding: 30px; margin-bottom: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .panel-head {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; flex-wrap: wrap; gap: 14px;
+    }
+    .panel-head h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: #fff; }
+
+    .data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; }
+    .data-table th { padding: 12px; border-bottom: 1px solid #2e2319; color: #888; text-transform: uppercase; font-size: 11px; }
+    .data-table td { padding: 14px 12px; border-bottom: 1px solid #1f1811; color: #ccc; vertical-align: middle; }
+    
+    .btn-action-edit {
+      background: #1c1812; color: #E8A93C; border: 1px solid #B8821E;
+      padding: 6px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: 600;
+      margin-right: 6px; transition: all 0.2s;
+    }
+    .btn-action-edit:hover { background: #B8821E; color: #111; }
+    
+    .btn-action-del {
+      background: #350f0f; color: #f87171; border: 1px solid #7f1d1d;
+      padding: 6px 12px; border-radius: 4px; font-size: 12px; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-action-del:hover { background: #ef4444; color: #fff; }
+
+    .btn-primary-action {
+      background: linear-gradient(135deg, #B8821E, #E8A93C); color: #111; border: none;
+      padding: 10px 20px; border-radius: 6px; font-weight: 700; font-size: 13.5px;
+      cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-primary-action:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(184,130,30,0.35); }
+
+    /* Dropzone Upload */
+    .dropzone-box {
+      border: 2px dashed rgba(184,130,30,0.4);
+      border-radius: 12px;
+      background: #18130e;
+      padding: 40px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 30px;
+    }
+    .dropzone-box:hover, .dropzone-box.dragover {
+      border-color: #E8A93C; background: #221b14;
+    }
+    .dropzone-icon { font-size: 40px; margin-bottom: 12px; color: #E8A93C; }
+    .dropzone-title { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .dropzone-desc { font-size: 13px; color: #888; max-width: 500px; margin: 0 auto; line-height: 1.5; }
+
+    /* Media Grid */
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .media-card {
+      background: #18130e; border: 1px solid #2e2319; border-radius: 8px;
+      overflow: hidden; display: flex; flex-direction: column;
+    }
+    .media-preview {
+      height: 150px; background: #0e0b08; display: flex; align-items: center;
+      justify-content: center; overflow: hidden; position: relative;
+    }
+    .media-preview img { width: 100%; height: 100%; object-fit: cover; }
+    .media-preview video { width: 100%; height: 100%; object-fit: cover; }
+    .media-preview .file-badge-type {
+      position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,0.8);
+      color: #E8A93C; font-size: 10px; font-weight: 700; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 3px;
+    }
+    .media-info { padding: 14px; flex-grow: 1; display: flex; flex-direction: column; }
+    .media-name { font-size: 12.5px; font-weight: 600; color: #fff; margin-bottom: 4px; word-break: break-all; }
+    .media-meta { font-size: 11px; color: #777; margin-bottom: 12px; }
+    .media-actions { display: flex; gap: 8px; margin-top: auto; }
+    .btn-copy-url {
+      background: #241c14; border: 1px solid #483928; color: #E8A93C;
+      padding: 6px 10px; border-radius: 4px; font-size: 11.5px; cursor: pointer; flex: 1;
+    }
+    .btn-copy-url:hover { background: #B8821E; color: #111; }
+
+    /* Forms & Inputs */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 16px; }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group label { font-size: 12px; color: #aaa; font-weight: 600; }
+    .form-group input, .form-group textarea, .form-group select {
+      background: #1c1610; border: 1px solid #3d2f21; color: #fff;
+      padding: 11px 14px; border-radius: 6px; font-size: 13.5px; outline: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: #B8821E; background: #221b14;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px);
+      z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-box {
+      background: #14100c; border: 1px solid #B8821E; border-radius: 12px;
+      width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto; padding: 32px;
+      position: relative; color: #fff; box-shadow: 0 25px 60px rgba(0,0,0,0.9);
+    }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px; background: none; border: none;
+      color: #888; font-size: 24px; cursor: pointer;
+    }
+    .modal-close:hover { color: #fff; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="admin-nav">
+    <div class="admin-title">
+      <span>🛡️ PsyDécode Admin Studio</span>
+      <span style="font-size: 11px; background: rgba(184,130,30,0.2); color: #E8A93C; padding: 3px 8px; border-radius: 12px; font-family: 'DM Sans', sans-serif;">Production Ready</span>
+    </div>
+    <div class="admin-links">
+      <a href="/" target="_blank">Voir le site en direct ↗</a>
+      <a href="/boutique" target="_blank">Boutique ↗</a>
+      <a href="/articles" target="_blank">Articles ↗</a>
+      <a href="/cgv" target="_blank">CGV ↗</a>
+    </div>
+  </header>
+
+  <main class="admin-container">
+
+    <!-- Tabs Bar -->
+    <div class="admin-tabs-bar">
+      <button class="tab-btn active" onclick="switchAdminTab('tab-dashboard')">
+        <span>📊</span> Tableau de Bord & Métriques
+      </button>
+      <button class="tab-btn" onclick="switchAdminTab('tab-articles')">
+        <span>✍️</span> Articles & Décodages (<span id="tab-art-badge">0</span>)
+      </button>
+      <button class="tab-btn" onclick="switchAdminTab('tab-products')">
+        <span>💎</span> Boutique & E-books (<span id="tab-prod-badge">0</span>)
+      </button>
+      <button class="tab-btn" onclick="switchAdminTab('tab-orders')">
+        <span>📦</span> Commandes & Suivi (<span id="tab-orders-badge">0</span>)
+      </button>
+      <button class="tab-btn" onclick="switchAdminTab('tab-media')">
+        <span>📁</span> Médiathèque & Téléversements (<span id="tab-media-badge">0</span>)
+      </button>
+      <button class="tab-btn" onclick="switchAdminTab('tab-deployment')">
+        <span>🚀</span> Mise en Ligne & Déploiement
+      </button>
+      <button class="tab-btn" onclick="switchAdminTab('tab-settings')">
+        <span>⚙️</span> Paramètres du Site
+      </button>
+    </div>
+
+    <!-- 1. DASHBOARD TAB -->
+    <div id="tab-dashboard" class="admin-tab-content active">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Vues Totales Articles</div>
+          <div class="kpi-val" id="stat-views">--</div>
+          <div class="kpi-sub">+18% engagement</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Soutiens & Likes</div>
+          <div class="kpi-val" id="stat-likes">--</div>
+          <div class="kpi-sub">Fort taux de conversion</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Abonnés Newsletter Privée</div>
+          <div class="kpi-val" id="stat-subs">--</div>
+          <div class="kpi-sub">Emails qualifiés</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Chiffre d'Affaires Total</div>
+          <div class="kpi-val" id="stat-rev">-- €</div>
+          <div class="kpi-sub" id="stat-sales">-- ventes validées</div>
+        </div>
+      </div>
+
+      <div class="panel-box">
+        <div class="panel-head">
+          <h3>Derniers Inscrits à la Newsletter Privée</h3>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Adresse Email</th>
+              <th>Date d'Inscription</th>
+              <th>Statut</th>
+            </tr>
+          </thead>
+          <tbody id="dash-subs-table">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 2. ARTICLES TAB -->
+    <div id="tab-articles" class="admin-tab-content">
+      <div class="panel-box">
+        <div class="panel-head">
+          <h3>Tous les Articles Publiés</h3>
+          <button class="btn-primary-action" onclick="openNewArticleModal()">
+            + Rédiger un Nouvel Article
+          </button>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Titre</th>
+              <th>Catégorie</th>
+              <th>Lectures</th>
+              <th>Likes</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="articles-table-body">
+            <!-- Loaded dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 3. PRODUCTS TAB -->
+    <div id="tab-products" class="admin-tab-content">
+      <div class="panel-box">
+        <div class="panel-head">
+          <h3>E-books, Formations & Guides d'Élite</h3>
+          <button class="btn-primary-action" onclick="openNewProductModal()">
+            + Ajouter un Produit / E-book
+          </button>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Visuel</th>
+              <th>Nom du Guide</th>
+              <th>Format</th>
+              <th>Prix Actuel</th>
+              <th>Ventes</th>
+              <th>Fichier Relié</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="products-table-body">
+            <!-- Loaded dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 3b. ORDERS & TRACKING TAB -->
+    <div id="tab-orders" class="admin-tab-content">
+      <div class="kpi-grid" style="margin-bottom: 24px;">
+        <div class="kpi-card">
+          <div class="kpi-label">Commandes Totales</div>
+          <div class="kpi-val" id="ord-stat-total">0</div>
+          <div class="kpi-sub">Historique global</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Commandes Validées</div>
+          <div class="kpi-val" id="ord-stat-completed" style="color:#2ecc71;">0</div>
+          <div class="kpi-sub">Accès livrés avec clé</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">En Attente de Paiement</div>
+          <div class="kpi-val" id="ord-stat-pending" style="color:#E8A93C;">0</div>
+          <div class="kpi-sub">Paiements à synchroniser</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Chiffre d'Affaires Encaissé</div>
+          <div class="kpi-val" id="ord-stat-revenue">0.00 €</div>
+          <div class="kpi-sub">Paiements confirmés</div>
+        </div>
+      </div>
+
+      <div class="panel-box">
+        <div class="panel-head" style="flex-wrap: wrap; gap: 14px;">
+          <div>
+            <h3>📦 Suivi des Commandes & Transactions</h3>
+            <p style="font-size: 13px; color: #888; margin-top: 4px;">Suivi en temps réel des transactions par Carte Bancaire et Mobile Money. Vérifiez le statut d'une commande en direct.</p>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <input type="text" id="orders-search-input" placeholder="🔍 Rechercher client, email, CMD..." style="background:#18130e; border:1px solid #3d2f21; color:#fff; padding:8px 12px; border-radius:6px; font-size:13px; width:220px;" oninput="filterOrdersTable()">
+            <select id="orders-status-filter" style="background:#18130e; border:1px solid #3d2f21; color:#E8A93C; padding:8px 12px; border-radius:6px; font-size:13px;" onchange="filterOrdersTable()">
+              <option value="all">Tous les statuts</option>
+              <option value="completed">✅ Validées (Payées)</option>
+              <option value="pending">⏳ En attente</option>
+            </select>
+            <button class="btn-primary-action" onclick="loadAdminOrders(true)">
+              🔄 Actualiser les Statuts
+            </button>
+          </div>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date & Heure</th>
+              <th>Réf. Commande</th>
+              <th>Client</th>
+              <th>Mode / Pays</th>
+              <th>Produit</th>
+              <th>Montant</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="orders-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 4. MEDIA & UPLOADS TAB -->
+    <div id="tab-media" class="admin-tab-content">
+      <div class="panel-box">
+        <div class="panel-head">
+          <div>
+            <h3>Médiathèque & Téléversement</h3>
+            <p style="font-size:13px; color:#888;">Téléversez ici vos <strong>Livres PDF/ePub</strong>, vos <strong>Audio MP3/WAV</strong>, vos <strong>Vidéos MP4</strong> et vos <strong>Photos</strong>. Vous pouvez ensuite copier leur URL pour les lier à vos articles ou vos e-books.</p>
+          </div>
+        </div>
+
+        <!-- Dropzone -->
+        <div id="upload-dropzone" class="dropzone-box">
+          <input type="file" id="file-input-hidden" multiple style="display:none;" accept="image/*,video/*,audio/*,.pdf,.epub">
+          <div class="dropzone-icon">☁️ ⬆️</div>
+          <div class="dropzone-title">Glissez vos fichiers ici ou cliquez pour téléverser</div>
+          <div class="dropzone-desc">Formats supportés : E-books (PDF, EPUB) • Audio (MP3, WAV, M4A) • Vidéos (MP4, WEBM) • Images (JPG, PNG, WebP)</div>
+          <div id="upload-status-text" style="color:#E8A93C; font-weight:bold; margin-top:14px; display:none;">Téléversement en cours...</div>
+        </div>
+
+        <!-- Files list -->
+        <h4 style="font-family:'Playfair Display', serif; font-size:19px; color:#E8A93C; margin-bottom:18px;">
+          Fichiers Disponibles sur le Serveur (<span id="media-count">0</span>)
+        </h4>
+        <div class="media-grid" id="media-grid-container">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. DEPLOYMENT TAB -->
+    <div id="tab-deployment" class="admin-tab-content">
+      <div class="panel-box">
+        <div class="panel-head">
+          <h3>Mise en Ligne & Déploiement Cloud (Production)</h3>
+        </div>
+
+        <div style="background:#18130e; border-left:4px solid #B8821E; padding:20px; border-radius:0 8px 8px 0; margin-bottom:30px; line-height:1.7;">
+          <strong>Votre site est 100% autonome et sans dépendance lourde :</strong><br>
+          Il fonctionne avec du pur HTML/CSS/JS et une API Node.js ultra-légère. Vous pouvez le déployer gratuitement en quelques minutes sur n'importe quelle plateforme moderne.
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:24px;">
+          <div style="background:#1a140f; border:1px solid #33271a; border-radius:10px; padding:24px;">
+            <h4 style="color:#E8A93C; font-size:18px; margin-bottom:10px;">Option 1 : Render / Railway (Recommandé pour Node.js)</h4>
+            <p style="font-size:13.5px; color:#aaa; line-height:1.6; margin-bottom:14px;">
+              Déploiement complet en 1 clic avec le serveur Node.js, l'API et le système d'upload.
+            </p>
+            <ol style="font-size:13px; color:#ccc; margin-left:18px; line-height:1.7;">
+              <li>Créez un compte gratuit sur <strong>render.com</strong> ou <strong>railway.app</strong>.</li>
+              <li>Poussez le dossier sur votre compte GitHub.</li>
+              <li>Cliquez sur <em>New Web Service</em> ➔ connectez votre dépôt.</li>
+              <li>Commande de démarrage : <code>node server.js</code></li>
+            </ol>
+          </div>
+
+          <div style="background:#1a140f; border:1px solid #33271a; border-radius:10px; padding:24px;">
+            <h4 style="color:#E8A93C; font-size:18px; margin-bottom:10px;">Option 2 : VPS / Hébergement Dédié (OVH / Hostinger)</h4>
+            <p style="font-size:13.5px; color:#aaa; line-height:1.6; margin-bottom:14px;">
+              Idéal pour relier directement votre propre nom de domaine <code>psydecode.com</code> avec certificat SSL Let's Encrypt gratuit.
+            </p>
+            <ol style="font-size:13px; color:#ccc; margin-left:18px; line-height:1.7;">
+              <li>Installez Node.js sur le serveur.</li>
+              <li>Copiez le dossier <code>psydecode-site</code>.</li>
+              <li>Lancez avec PM2 : <code>pm2 start server.js --name "psydecode"</code></li>
+              <li>Configurez Nginx comme reverse-proxy sur le port 3000.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. SETTINGS TAB -->
+    <div id="tab-settings" class="admin-tab-content">
+      <div class="panel-box">
+        <div class="panel-head">
+          <h3>Paramètres Généraux du Site</h3>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap:30px;">
+
+          <!-- Système de Paiement Sécurisé -->
+          <div>
+            <h4 style="font-family:'Playfair Display', serif; font-size:19px; color:#E8A93C; margin-bottom:18px; padding-bottom:10px; border-bottom:1px solid #2a2016;">💳 Passerelle de Paiement Sécurisée</h4>
+            <div class="form-group">
+              <label>Mode de fonctionnement</label>
+              <select id="set-payment-provider">
+                <option value="gateway">Passerelle Directe Active (Cartes & Mobile Money)</option>
+                <option value="simulation">Mode Simulation (Test)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Clé API Secrète (Secret Key)</label>
+              <input type="password" id="set-payment-api-key" placeholder="sk_live_... ou sk_test_...">
+              <div id="gateway-status-badge" style="font-size:12px; margin-top:6px; font-weight:500;"></div>
+            </div>
+            <div class="form-row" style="margin-bottom:0;">
+              <div class="form-group">
+                <label>Devise d'encaissement</label>
+                <select id="set-payment-currency">
+                  <option value="XOF">Franc CFA (XOF) - Mobile Money & Cartes</option>
+                  <option value="USD">Dollar ($ USD) - Cartes Internationales</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Taux conversion EUR → XOF</label>
+                <input type="number" step="0.1" id="set-payment-rate" value="655.957">
+              </div>
+            </div>
+            <div style="background:#18130e; border-left:4px solid #B8821E; padding:14px 16px; border-radius:0 6px 6px 0; font-size:12.5px; color:#aaa; line-height:1.6; margin-bottom:16px;">
+              <strong style="color:#E8A93C;">Fonctionnement 100% Automatisé :</strong><br>
+              Les clients peuvent payer par <strong>Carte Bancaire (Visa, Mastercard)</strong> et par <strong>Mobile Money (MTN MoMo, Moov, Wave, etc.)</strong>. Dès la confirmation du paiement, ils sont automatiquement redirigés vers leur page d'accès exclusive avec leur code de téléchargement et la vente est inscrite dans votre base de données SQLite.
+            </div>
+          </div>
+
+          <!-- Newsletter & TikTok -->
+          <div>
+            <h4 style="font-family:'Playfair Display', serif; font-size:19px; color:#E8A93C; margin-bottom:18px; padding-bottom:10px; border-bottom:1px solid #2a2016;">📱 TikTok & Réseaux</h4>
+            <div class="form-group">
+              <label>Handle TikTok officiel</label>
+              <input type="text" id="set-tiktok" placeholder="@psydecode">
+            </div>
+            <div class="form-group">
+              <label>Nombre d'abonnés TikTok (affichage stats)</label>
+              <input type="text" id="set-tiktok-followers" placeholder="250K+">
+            </div>
+            <div class="form-group">
+              <label>URL Instagram (optionnel)</label>
+              <input type="text" id="set-instagram" placeholder="https://instagram.com/psydecode">
+            </div>
+
+            <h4 style="font-family:'Playfair Display', serif; font-size:19px; color:#E8A93C; margin:24px 0 18px; padding-bottom:10px; border-bottom:1px solid #2a2016;">📧 Email & Newsletter</h4>
+            <div class="form-group">
+              <label>Email de contact public</label>
+              <input type="email" id="set-contact-email" placeholder="contact@psydecode.com">
+            </div>
+            <div class="form-group">
+              <label>Service d'envoi email (optionnel)</label>
+              <select id="set-email-provider">
+                <option value="none">Aucun (inscription locale uniquement)</option>
+                <option value="mailchimp">Mailchimp</option>
+                <option value="brevo">Brevo (ex-Sendinblue)</option>
+                <option value="convertkit">ConvertKit</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- SEO & Site -->
+          <div>
+            <h4 style="font-family:'Playfair Display', serif; font-size:19px; color:#E8A93C; margin-bottom:18px; padding-bottom:10px; border-bottom:1px solid #2a2016;">🌐 Nom de Domaine & SEO</h4>
+            <div class="form-group">
+              <label>Nom du site</label>
+              <input type="text" id="set-site-name" placeholder="PsyDécode">
+            </div>
+            <div class="form-group">
+              <label>URL de production</label>
+              <input type="text" id="set-site-url" placeholder="https://psydecode.com">
+            </div>
+            <div class="form-group">
+              <label>Google Analytics / Tag ID</label>
+              <input type="text" id="set-ga-id" placeholder="G-XXXXXXXXXX">
+            </div>
+            <div class="form-group">
+              <label>Garantie remboursement (jours)</label>
+              <input type="number" id="set-guarantee-days" placeholder="30" value="30">
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:30px; text-align:right;">
+          <button class="btn-primary-action" onclick="saveSettings()">💾 Sauvegarder tous les paramètres</button>
+        </div>
+      </div>
+
+      <!-- SQLite Database Status & Export -->
+      <div class="panel-box">
+        <div class="panel-head">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <h3>🗄️ Base de Données Relationnelle (SQLite 3)</h3>
+            <span style="background:rgba(46,204,113,0.15); color:#2ecc71; border:1px solid rgba(46,204,113,0.4); font-size:11.5px; padding:3px 10px; border-radius:12px; font-weight:600;">● Active & Connectée (Mode WAL)</span>
+          </div>
+        </div>
+        <p style="color:#aaa; font-size:13.5px; line-height:1.6; margin-bottom:18px;">
+          Le site est propulsé par <strong>SQLite 3</strong> (fichier local ultra-rapide <code style="background:#1f1810; color:#E8A93C; padding:2px 6px; border-radius:4px;">data/psydecode.db</code>). Vos articles, produits, abonnés, commandes et messages y sont enregistrés avec intégrité relationnelle et transactions sécurisées.
+        </p>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:14px; margin-bottom:20px;">
+          <div style="background:#16120e; border:1px solid #33261a; padding:12px 16px; border-radius:8px;">
+            <div style="font-size:11px; color:#888; text-transform:uppercase;">Fichier Base de Données</div>
+            <div style="font-size:14px; color:#fff; font-weight:600; margin-top:4px;">data/psydecode.db</div>
+          </div>
+          <div style="background:#16120e; border:1px solid #33261a; padding:12px 16px; border-radius:8px;">
+            <div style="font-size:11px; color:#888; text-transform:uppercase;">Moteur SQL</div>
+            <div style="font-size:14px; color:#E8A93C; font-weight:600; margin-top:4px;">better-sqlite3 v13</div>
+          </div>
+          <div style="background:#16120e; border:1px solid #33261a; padding:12px 16px; border-radius:8px;">
+            <div style="font-size:11px; color:#888; text-transform:uppercase;">Journalisation</div>
+            <div style="font-size:14px; color:#2ecc71; font-weight:600; margin-top:4px;">WAL (Write-Ahead Log)</div>
+          </div>
+          <div style="background:#16120e; border:1px solid #33261a; padding:12px 16px; border-radius:8px;">
+            <div style="font-size:11px; color:#888; text-transform:uppercase;">Tables gérées</div>
+            <div style="font-size:14px; color:#fff; font-weight:600; margin-top:4px;">6 tables relationnelles</div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:14px; flex-wrap:wrap; align-items:center;">
+          <button class="btn-primary-action" onclick="exportData('subscribers')" style="background:#1c1812; color:#E8A93C; border:1px solid #B8821E;">
+            📥 Exporter Abonnés (CSV)
+          </button>
+          <button class="btn-primary-action" onclick="exportData('articles')" style="background:#1c1812; color:#E8A93C; border:1px solid #B8821E;">
+            📥 Exporter Articles (JSON)
+          </button>
+          <button class="btn-primary-action" onclick="exportData('products')" style="background:#1c1812; color:#E8A93C; border:1px solid #B8821E;">
+            📥 Exporter Produits (JSON)
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODAL: EDIT / CREATE ARTICLE -->
+  <div id="article-modal" class="modal-backdrop">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeArticleModal()">&times;</button>
+      <h3 id="modal-art-title" style="font-family:'Playfair Display', serif; font-size:22px; color:#E8A93C; margin-bottom:20px;">
+        Modifier l'Article
+      </h3>
+
+      <form id="article-edit-form">
+        <input type="hidden" id="art-form-id">
+
+        <div class="form-group">
+          <label>Titre de l'Article</label>
+          <input type="text" id="art-form-title" required placeholder="Titre accrocheur">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Catégorie</label>
+            <select id="art-form-category">
+              <option value="seduction">Séduction & Attraction</option>
+              <option value="langage-corporel">Langage Corporel</option>
+              <option value="charisme">Charisme & Voix</option>
+              <option value="manipulation">Défense Mentale</option>
+              <option value="psychologie">Neurosciences</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Temps de lecture estimé</label>
+            <input type="text" id="art-form-readtime" placeholder="ex: 6 min">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>URL de l'image de couverture</label>
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="art-form-image" required placeholder="/images/... ou /uploads/..." style="flex:1;">
+            <button type="button" onclick="switchAdminTab('tab-media'); closeArticleModal();" style="background:#261f17; border:1px solid #483928; color:#E8A93C; padding:0 12px; border-radius:6px; font-size:12px; cursor:pointer;">Choisir dans Médiathèque</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Résumé / Extrait d'accroche</label>
+          <textarea id="art-form-excerpt" rows="2" required placeholder="Court résumé affiché sur les cartes..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Contenu complet (HTML accepté : &lt;h3&gt;, &lt;p&gt;, &lt;blockquote&gt;, &lt;ul&gt;)</label>
+          <textarea id="art-form-content" rows="8" required placeholder="Rédigez ou collez votre texte ici..."></textarea>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:24px;">
+          <button type="button" onclick="closeArticleModal()" style="background:none; border:1px solid #444; color:#aaa; padding:10px 18px; border-radius:6px; cursor:pointer;">Annuler</button>
+          <button type="submit" class="btn-primary-action">Enregistrer l'Article</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: EDIT / CREATE PRODUCT -->
+  <div id="product-modal" class="modal-backdrop">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeProductModal()">&times;</button>
+      <h3 id="modal-prod-title" style="font-family:'Playfair Display', serif; font-size:22px; color:#E8A93C; margin-bottom:20px;">
+        Modifier le Guide / E-book
+      </h3>
+
+      <form id="product-edit-form">
+        <input type="hidden" id="prod-form-id">
+
+        <div class="form-group">
+          <label>Nom du Guide / E-book</label>
+          <input type="text" id="prod-form-name" required placeholder="Ex: Le Code de la Séduction Silencieuse">
+        </div>
+
+        <div class="form-group">
+          <label>Sous-titre / Promesse</label>
+          <input type="text" id="prod-form-subtitle" placeholder="Ex: Protocole en 6 étapes pour maîtriser le non-verbal">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prix Actuel (€ TTC)</label>
+            <input type="number" step="0.5" id="prod-form-price" required placeholder="27">
+          </div>
+          <div class="form-group">
+            <label>Prix Barré (€ TTC - Optionnel)</label>
+            <input type="number" step="0.5" id="prod-form-origprice" placeholder="49">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Format</label>
+            <input type="text" id="prod-form-format" placeholder="E-book PDF (184 pages) ou Audio MP3">
+          </div>
+          <div class="form-group">
+            <label>Badge mis en avant (Optionnel)</label>
+            <input type="text" id="prod-form-badge" placeholder="BESTSELLER, NOUVEAU...">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Image de Couverture</label>
+          <input type="text" id="prod-form-image" required placeholder="/images/... ou /uploads/...">
+        </div>
+
+        <div class="form-group">
+          <label>Lien du fichier téléchargeable après achat (PDF, Audio, Vidéo)</label>
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="prod-form-download" required placeholder="/uploads/mon-guide.pdf" style="flex:1;">
+            <button type="button" onclick="switchAdminTab('tab-media'); closeProductModal();" style="background:#261f17; border:1px solid #483928; color:#E8A93C; padding:0 12px; border-radius:6px; font-size:12px; cursor:pointer;">Choisir Fichier</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Points forts / Inclus (1 par ligne)</label>
+          <textarea id="prod-form-features" rows="4" placeholder="184 pages illustrées&#10;12 protocoles de calibration&#10;Accès immédiat par téléchargement"></textarea>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:24px;">
+          <button type="button" onclick="closeProductModal()" style="background:none; border:1px solid #444; color:#aaa; padding:10px 18px; border-radius:6px; cursor:pointer;">Annuler</button>
+          <button type="submit" class="btn-primary-action">Enregistrer le Produit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script>
+    let globalArticles = [];
+    let globalProducts = [];
+
+    let globalOrders = [];
+
+    // Switch Tabs
+    function switchAdminTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+
+      const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes(tabId));
+      if (targetBtn) targetBtn.classList.add('active');
+
+      const targetContent = document.getElementById(tabId);
+      if (targetContent) targetContent.classList.add('active');
+    }
+
+    // Load All Admin Data
+    async function initAdminStudio() {
+      await Promise.all([
+        loadStatsAndSubs(),
+        loadAdminOrders(),
+        loadArticlesAdmin(),
+        loadProductsAdmin(),
+        loadMediaFiles()
+      ]);
+    }
+
+    // 0. Orders Tracking
+    async function loadAdminOrders(forceToast = false) {
+      try {
+        const res = await fetch('/api/orders');
+        const data = await res.json();
+        if (data.success) {
+          globalOrders = data.orders || [];
+          const stats = data.stats || {};
+
+          const badge = document.getElementById('tab-orders-badge');
+          if (badge) badge.textContent = globalOrders.length;
+          
+          const elTotal = document.getElementById('ord-stat-total');
+          if (elTotal) elTotal.textContent = stats.total || globalOrders.length;
+
+          const elComp = document.getElementById('ord-stat-completed');
+          if (elComp) elComp.textContent = stats.completed || 0;
+
+          const elPend = document.getElementById('ord-stat-pending');
+          if (elPend) elPend.textContent = stats.pending || 0;
+
+          const elRev = document.getElementById('ord-stat-revenue');
+          if (elRev) elRev.textContent = (stats.revenue || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+
+          renderOrdersTable(globalOrders);
+          if (forceToast) showToast('Commandes et statuts synchronisés !', 'success');
+        }
+      } catch (e) {
+        console.error('Orders load error:', e);
+      }
+    }
+
+    function renderOrdersTable(orders) {
+      const table = document.getElementById('orders-table-body');
+      if (!table) return;
+      if (!orders.length) {
+        table.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:30px; color:#888;">Aucune commande pour le moment.</td></tr>`;
+        return;
+      }
+
+      table.innerHTML = orders.map(ord => {
+        const isCompleted = ord.status === 'completed' || ord.status === 'paid';
+        const isCard = ord.paymentMethod === 'card';
+        const flag = ord.country === 'FR' ? '🇫🇷' : (ord.country === 'BJ' ? '🇧🇯' : (ord.country === 'CI' ? '🇨🇮' : (ord.country === 'BE' ? '🇧🇪' : '🌐')));
+        const dateFormatted = ord.created_at ? new Date(ord.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' }) : '--';
+
+        return `
+          <tr>
+            <td style="font-size:12px; color:#888;">${dateFormatted}</td>
+            <td><strong style="color:#E8A93C; font-family:monospace;">${ord.orderId}</strong></td>
+            <td>
+              <div style="font-weight:600; color:#fff;">${ord.customerName || 'Client'}</div>
+              <div style="font-size:11.5px; color:#888;">${ord.customerEmail || '--'}</div>
+              ${ord.customerPhone ? `<div style="font-size:11px; color:#666;">📞 ${ord.customerPhone}</div>` : ''}
+            </td>
+            <td>
+              <span style="display:inline-flex; align-items:center; gap:4px; font-size:11.5px; background:#1c1812; border:1px solid #33261a; padding:3px 8px; border-radius:4px; color:#ccc;">
+                ${flag} ${isCard ? '💳 Carte' : '📱 MoMo'} (${ord.country || (isCard ? 'FR' : 'BJ')})
+              </span>
+            </td>
+            <td style="max-width:200px; color:#ddd; font-weight:500;">${ord.productName || 'Produit'}</td>
+            <td><strong style="color:#fff;">${ord.amount ? Number(ord.amount).toFixed(2) : '0.00'} €</strong></td>
+            <td>
+              ${isCompleted 
+                ? `<span style="background:rgba(46,204,113,0.15); color:#2ecc71; border:1px solid rgba(46,204,113,0.4); font-size:11.5px; padding:4px 10px; border-radius:12px; font-weight:600; display:inline-block;">✅ Payé & Livré</span>
+                   <div style="font-family:monospace; font-size:10.5px; color:#888; margin-top:3px;">Clé: ${ord.accessCode || 'PSY-VALIDE'}</div>`
+                : `<span style="background:rgba(232,169,60,0.15); color:#E8A93C; border:1px solid rgba(232,169,60,0.4); font-size:11.5px; padding:4px 10px; border-radius:12px; font-weight:600; display:inline-block;">⏳ En attente</span>`
+              }
+            </td>
+            <td>
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                ${!isCompleted ? `
+                  <button class="btn-action-edit" onclick="verifyOrderStatus('${ord.orderId}')" title="Interroger la passerelle de paiement en direct">
+                    🔄 Vérifier
+                  </button>
+                  <button class="btn-action-edit" style="border-color:#2ecc71; color:#2ecc71;" onclick="markOrderCompleted('${ord.orderId}')" title="Marquer manuellement comme payé">
+                    ✓ Valider
+                  </button>
+                ` : ''}
+                <a href="/commande-validee?order_id=${ord.orderId}" target="_blank" class="btn-action-edit" style="text-decoration:none; display:inline-block;" title="Voir la page de suivi client">
+                  🔗 Suivi client ↗
+                </a>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filterOrdersTable() {
+      const query = (document.getElementById('orders-search-input').value || '').toLowerCase();
+      const statusFilter = document.getElementById('orders-status-filter').value;
+
+      const filtered = globalOrders.filter(ord => {
+        const matchQuery = !query || 
+          (ord.orderId && ord.orderId.toLowerCase().includes(query)) ||
+          (ord.customerName && ord.customerName.toLowerCase().includes(query)) ||
+          (ord.customerEmail && ord.customerEmail.toLowerCase().includes(query)) ||
+          (ord.productName && ord.productName.toLowerCase().includes(query));
+        
+        let matchStatus = true;
+        const isCompleted = ord.status === 'completed' || ord.status === 'paid';
+        if (statusFilter === 'completed') matchStatus = isCompleted;
+        else if (statusFilter === 'pending') matchStatus = !isCompleted;
+
+        return matchQuery && matchStatus;
+      });
+
+      renderOrdersTable(filtered);
+    }
+
+    async function verifyOrderStatus(orderId) {
+      try {
+        showToast('Vérification du paiement...', 'info');
+        const res = await fetch('/api/orders/verify-status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          if (data.order && (data.order.status === 'completed' || data.order.status === 'paid')) {
+            showToast(`Commande ${orderId} validée et confirmée !`, 'success');
+          } else {
+            showToast(`Statut actuel: En attente de paiement`, 'info');
+          }
+          loadAdminOrders();
+        } else {
+          showToast(data.error || 'Erreur lors de la vérification', 'error');
+        }
+      } catch(e) {
+        showToast('Erreur de connexion', 'error');
+      }
+    }
+
+    async function markOrderCompleted(orderId) {
+      if (!confirm(`Valider manuellement la commande ${orderId} et débloquer les accès ?`)) return;
+      try {
+        const res = await fetch('/api/orders/mark-completed', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(`Commande ${orderId} marquée comme payée !`, 'success');
+          loadAdminOrders();
+        }
+      } catch (e) {
+        showToast('Erreur', 'error');
+      }
+    }
+
+    // 1. Stats and Subscribers
+    async function loadStatsAndSubs() {
+      try {
+        const res = await fetch('/api/stats');
+        const s = await res.json();
+        document.getElementById('stat-views').textContent = (s.totalViews || 0).toLocaleString();
+        document.getElementById('stat-likes').textContent = (s.totalLikes || 0).toLocaleString();
+        document.getElementById('stat-subs').textContent = s.subscribersCount || 0;
+        document.getElementById('stat-rev').textContent = (s.simulatedRevenue || 0).toLocaleString() + ' €';
+        document.getElementById('stat-sales').textContent = `${s.totalSales || 0} ventes validées`;
+
+        const subRes = await fetch('/api/subscribers');
+        const subs = await subRes.json();
+        const subTable = document.getElementById('dash-subs-table');
+        subTable.innerHTML = subs.map(sub => `
+          <tr>
+            <td style="color:#fff; font-weight:600;">${sub.email}</td>
+            <td>${sub.date ? new Date(sub.date).toLocaleDateString('fr-FR') : '--'}</td>
+            <td><span style="color:#4ade80; font-size:11px; background:rgba(74,222,128,0.1); padding:2px 8px; border-radius:10px;">Vérifié</span></td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        console.error('Error stats:', e);
+      }
+    }
+
+    // 2. Articles Management
+    async function loadArticlesAdmin() {
+      try {
+        const res = await fetch('/api/articles');
+        globalArticles = await res.json();
+        document.getElementById('tab-art-badge').textContent = globalArticles.length;
+
+        const table = document.getElementById('articles-table-body');
+        table.innerHTML = globalArticles.map(a => `
+          <tr>
+            <td><img src="${a.image}" style="width:50px; height:36px; object-fit:cover; border-radius:4px;" alt="mini"></td>
+            <td style="font-weight:600; color:#fff; max-width:280px;">${a.title}</td>
+            <td><span style="color:#E8A93C;">${a.categoryName || a.category}</span></td>
+            <td>${a.views || 0}</td>
+            <td>♥ ${a.likes || 0}</td>
+            <td>${a.date}</td>
+            <td>
+              <button class="btn-action-edit" onclick="editArticle('${a.id}')">✏️ Modifier</button>
+              <button class="btn-action-del" onclick="deleteArticle('${a.id}')">🗑</button>
+            </td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function openNewArticleModal() {
+      document.getElementById('modal-art-title').textContent = "Rédiger un Nouvel Article";
+      document.getElementById('art-form-id').value = '';
+      document.getElementById('article-edit-form').reset();
+      document.getElementById('art-form-image').value = '/images/article-seduction.jpg';
+      document.getElementById('art-form-readtime').value = '6 min';
+      document.getElementById('article-modal').style.display = 'flex';
+    }
+
+    function editArticle(id) {
+      const art = globalArticles.find(a => a.id === id);
+      if (!art) return;
+
+      document.getElementById('modal-art-title').textContent = "Modifier l'Article : " + art.title;
+      document.getElementById('art-form-id').value = art.id;
+      document.getElementById('art-form-title').value = art.title;
+      document.getElementById('art-form-category').value = art.category || 'seduction';
+      document.getElementById('art-form-readtime').value = art.readTime || '6 min';
+      document.getElementById('art-form-image').value = art.image || '/images/article-seduction.jpg';
+      document.getElementById('art-form-excerpt').value = art.excerpt || '';
+      document.getElementById('art-form-content').value = art.content || '';
+      document.getElementById('article-modal').style.display = 'flex';
+    }
+
+    function closeArticleModal() {
+      document.getElementById('article-modal').style.display = 'none';
+    }
+
+    document.getElementById('article-edit-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('art-form-id').value;
+      const catSelect = document.getElementById('art-form-category');
+      
+      const payload = {
+        title: document.getElementById('art-form-title').value.trim(),
+        category: catSelect.value,
+        categoryName: catSelect.selectedOptions[0].text,
+        readTime: document.getElementById('art-form-readtime').value.trim(),
+        image: document.getElementById('art-form-image').value.trim(),
+        excerpt: document.getElementById('art-form-excerpt').value.trim(),
+        content: document.getElementById('art-form-content').value.trim()
+      };
+
+      const url = id ? `/api/articles/${id}` : '/api/articles';
+      const method = id ? 'PUT' : 'POST';
+
+      try {
+        const res = await fetch(url, {
+          method: method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(id ? 'Article mis à jour avec succès !' : 'Nouvel article publié !', 'success');
+          closeArticleModal();
+          loadArticlesAdmin();
+        } else {
+          showToast(data.error || 'Erreur lors de l\'enregistrement', 'error');
+        }
+      } catch (err) {
+        showToast('Erreur de connexion', 'error');
+      }
+    });
+
+    async function deleteArticle(id) {
+      if (!confirm('Voulez-vous vraiment supprimer cet article ?')) return;
+      try {
+        const res = await fetch(`/api/articles/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          showToast('Article supprimé avec succès', 'success');
+          loadArticlesAdmin();
+        }
+      } catch (e) {
+        showToast('Erreur lors de la suppression', 'error');
+      }
+    }
+
+    // 3. Products Management
+    async function loadProductsAdmin() {
+      try {
+        const res = await fetch('/api/products');
+        globalProducts = await res.json();
+        document.getElementById('tab-prod-badge').textContent = globalProducts.length;
+
+        const table = document.getElementById('products-table-body');
+        table.innerHTML = globalProducts.map(p => `
+          <tr>
+            <td><img src="${p.image}" style="width:44px; height:44px; object-fit:cover; border-radius:4px;" alt="p"></td>
+            <td style="font-weight:600; color:#fff;">${p.name}</td>
+            <td><span style="color:#aaa; font-size:12px;">${p.format || 'E-book'}</span></td>
+            <td><strong style="color:#E8A93C;">${p.price} €</strong></td>
+            <td>${p.salesCount || 0}</td>
+            <td><span style="font-family:monospace; font-size:11px; color:#888;">${p.downloadUrl || '#'}</span></td>
+            <td>
+              <button class="btn-action-edit" onclick="editProduct('${p.id}')">✏️ Modifier</button>
+              <button class="btn-action-del" onclick="deleteProduct('${p.id}')">🗑</button>
+            </td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function openNewProductModal() {
+      document.getElementById('modal-prod-title').textContent = "Ajouter un Produit / E-book";
+      document.getElementById('prod-form-id').value = '';
+      document.getElementById('product-edit-form').reset();
+      document.getElementById('prod-form-image').value = '/images/article-seduction.jpg';
+      document.getElementById('prod-form-format').value = 'E-book PDF (184 pages)';
+      document.getElementById('prod-form-download').value = '/uploads/guide-seduction.pdf';
+      document.getElementById('product-modal').style.display = 'flex';
+    }
+
+    function editProduct(id) {
+      const p = globalProducts.find(item => item.id === id);
+      if (!p) return;
+
+      document.getElementById('modal-prod-title').textContent = "Modifier : " + p.name;
+      document.getElementById('prod-form-id').value = p.id;
+      document.getElementById('prod-form-name').value = p.name || '';
+      document.getElementById('prod-form-subtitle').value = p.subtitle || '';
+      document.getElementById('prod-form-price').value = p.price || '';
+      document.getElementById('prod-form-origprice').value = p.originalPrice || '';
+      document.getElementById('prod-form-format').value = p.format || '';
+      document.getElementById('prod-form-badge').value = p.badge || '';
+      document.getElementById('prod-form-image').value = p.image || '';
+      document.getElementById('prod-form-download').value = p.downloadUrl || '';
+      document.getElementById('prod-form-features').value = (p.features || []).join('\n');
+
+      document.getElementById('product-modal').style.display = 'flex';
+    }
+
+    function closeProductModal() {
+      document.getElementById('product-modal').style.display = 'none';
+    }
+
+    document.getElementById('product-edit-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('prod-form-id').value;
+
+      const payload = {
+        name: document.getElementById('prod-form-name').value.trim(),
+        subtitle: document.getElementById('prod-form-subtitle').value.trim(),
+        price: parseFloat(document.getElementById('prod-form-price').value),
+        originalPrice: document.getElementById('prod-form-origprice').value ? parseFloat(document.getElementById('prod-form-origprice').value) : null,
+        format: document.getElementById('prod-form-format').value.trim(),
+        badge: document.getElementById('prod-form-badge').value.trim(),
+        image: document.getElementById('prod-form-image').value.trim(),
+        downloadUrl: document.getElementById('prod-form-download').value.trim(),
+        features: document.getElementById('prod-form-features').value.split('\n').map(s => s.trim()).filter(Boolean)
+      };
+
+      const url = id ? `/api/products/${id}` : '/api/products';
+      const method = id ? 'PUT' : 'POST';
+
+      try {
+        const res = await fetch(url, {
+          method: method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(id ? 'Produit mis à jour !' : 'Nouveau produit créé !', 'success');
+          closeProductModal();
+          loadProductsAdmin();
+        } else {
+          showToast(data.error || 'Erreur lors de l\'enregistrement', 'error');
+        }
+      } catch (err) {
+        showToast('Erreur de connexion', 'error');
+      }
+    });
+
+    async function deleteProduct(id) {
+      if (!confirm('Supprimer ce produit de la boutique ?')) return;
+      try {
+        const res = await fetch(`/api/products/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          showToast('Produit retiré de la boutique', 'success');
+          loadProductsAdmin();
+        }
+      } catch (e) {
+        showToast('Erreur lors de la suppression', 'error');
+      }
+    }
+
+    // 4. Media & Uploads Management
+    async function loadMediaFiles() {
+      try {
+        const res = await fetch('/api/uploads');
+        const files = await res.json();
+        document.getElementById('tab-media-badge').textContent = files.length;
+        document.getElementById('media-count').textContent = files.length;
+
+        const container = document.getElementById('media-grid-container');
+        if (files.length === 0) {
+          container.innerHTML = `
+            <div style="grid-column:1/-1; text-align:center; padding:40px; color:#666;">
+              Aucun fichier téléversé pour l'instant. Déposez vos PDF, MP3, MP4 ou images ci-dessus !
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = files.map(f => {
+          let previewHtml = '';
+          if (f.type === 'image') {
+            previewHtml = `<img src="${f.url}" alt="${f.name}">`;
+          } else if (f.type === 'video') {
+            previewHtml = `<video src="${f.url}" controls style="max-height:100%; max-width:100%;"></video>`;
+          } else if (f.type === 'audio') {
+            previewHtml = `<div style="text-align:center; padding:10px;"><div style="font-size:32px; margin-bottom:6px;">🎵</div><audio src="${f.url}" controls style="width:180px;"></audio></div>`;
+          } else if (f.type === 'ebook') {
+            previewHtml = `<div style="text-align:center;"><div style="font-size:42px;">📕</div><span style="font-size:12px; color:#E8A93C;">DOCUMENT PDF/EPUB</span></div>`;
+          } else {
+            previewHtml = `<div style="font-size:40px;">📄</div>`;
+          }
+
+          const sizeFormatted = (f.size / (1024 * 1024) > 1) 
+            ? (f.size / (1024 * 1024)).toFixed(1) + ' Mo'
+            : (f.size / 1024).toFixed(0) + ' Ko';
+
+          return `
+            <div class="media-card">
+              <div class="media-preview">
+                <span class="file-badge-type">${f.type}</span>
+                ${previewHtml}
+              </div>
+              <div class="media-info">
+                <div class="media-name" title="${f.name}">${f.name}</div>
+                <div class="media-meta">${sizeFormatted} • ${new Date(f.date).toLocaleDateString('fr-FR')}</div>
+                <div class="media-actions">
+                  <button class="btn-copy-url" onclick="copyFileUrl('${f.url}')">📋 Copier l'URL</button>
+                  <button class="btn-action-del" onclick="deleteFile('${f.name}')">🗑</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function copyFileUrl(url) {
+      navigator.clipboard.writeText(url);
+      showToast('URL copiée dans le presse-papier : ' + url, 'success');
+    }
+
+    async function deleteFile(filename) {
+      if (!confirm(`Supprimer le fichier "${filename}" ?`)) return;
+      try {
+        const res = await fetch(`/api/uploads/${encodeURIComponent(filename)}`, { method: 'DELETE' });
+        if (res.ok) {
+          showToast('Fichier supprimé du serveur', 'success');
+          loadMediaFiles();
+        }
+      } catch (e) {
+        showToast('Erreur suppression fichier', 'error');
+      }
+    }
+
+    // Upload handling (Drag & Drop + Click)
+    const dropzone = document.getElementById('upload-dropzone');
+    const fileInput = document.getElementById('file-input-hidden');
+    const statusText = document.getElementById('upload-status-text');
+
+    dropzone.addEventListener('click', () => fileInput.click());
+
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.classList.remove('dragover');
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files.length > 0) {
+        uploadFiles(e.dataTransfer.files);
+      }
+    });
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length > 0) {
+        uploadFiles(fileInput.files);
+      }
+    });
+
+    async function uploadFiles(fileList) {
+      statusText.style.display = 'block';
+      statusText.textContent = `Téléversement de ${fileList.length} fichier(s) en cours...`;
+
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i];
+        statusText.textContent = `Téléversement de "${file.name}" (${i+1}/${fileList.length})...`;
+
+        try {
+          // Binary stream upload via x-filename
+          const res = await fetch('/api/upload', {
+            method: 'POST',
+            headers: {
+              'x-filename': encodeURIComponent(file.name),
+              'Content-Type': file.type || 'application/octet-stream'
+            },
+            body: file
+          });
+
+          const data = await res.json();
+          if (res.ok && data.success) {
+            showToast(`Fichier "${file.name}" téléversé avec succès !`, 'success');
+          } else {
+            showToast(`Erreur sur "${file.name}": ${data.error || 'Erreur'}`, 'error');
+          }
+        } catch (err) {
+          showToast(`Erreur réseau sur "${file.name}"`, 'error');
+        }
+      }
+
+      statusText.style.display = 'none';
+      fileInput.value = '';
+      loadMediaFiles();
+    }
+
+    // Settings Load & Save
+    async function loadSettings() {
+      try {
+        const res = await fetch('/api/settings');
+        const s = await res.json();
+        if (s.paymentProvider) document.getElementById('set-payment-provider').value = s.paymentProvider || 'simulation';
+        if (s.paymentApiKey) document.getElementById('set-payment-api-key').value = s.paymentApiKey || '';
+        if (s.paymentCurrency) document.getElementById('set-payment-currency').value = s.paymentCurrency || 'XOF';
+        if (s.paymentConversionRate) document.getElementById('set-payment-rate').value = s.paymentConversionRate || '655.957';
+
+        const isLive = s.paymentProvider === 'gateway' && s.paymentApiKey && s.paymentApiKey.trim().startsWith('sk_');
+        const badgeEl = document.getElementById('gateway-status-badge');
+        if (badgeEl) {
+          if (isLive) {
+            badgeEl.innerHTML = '🟢 <strong>Mode Réel Actif</strong> : Les paiements redirigent vers la passerelle sécurisée.';
+            badgeEl.style.color = '#2ecc71';
+          } else {
+            badgeEl.innerHTML = '🟡 <strong>Mode Simulation</strong> : Entrez votre clé pour activer le paiement réel.';
+            badgeEl.style.color = '#E8A93C';
+          }
+        }
+        if (s.tiktokHandle) document.getElementById('set-tiktok').value = s.tiktokHandle || '@psydecode';
+        if (s.tiktokFollowers) document.getElementById('set-tiktok-followers').value = s.tiktokFollowers || '250K+';
+        if (s.instagram) document.getElementById('set-instagram').value = s.instagram || '';
+        if (s.contactEmail) document.getElementById('set-contact-email').value = s.contactEmail || 'contact@psydecode.com';
+        if (s.emailProvider) document.getElementById('set-email-provider').value = s.emailProvider || 'none';
+        if (s.siteName) document.getElementById('set-site-name').value = s.siteName || 'PsyDécode';
+        if (s.siteUrl) document.getElementById('set-site-url').value = s.siteUrl || '';
+        if (s.googleAnalyticsId) document.getElementById('set-ga-id').value = s.googleAnalyticsId || '';
+        if (s.guaranteeDays) document.getElementById('set-guarantee-days').value = s.guaranteeDays || 30;
+      } catch (e) { /* settings may not exist yet */ }
+    }
+
+    async function saveSettings() {
+      const payload = {
+        paymentProvider: document.getElementById('set-payment-provider').value,
+        paymentApiKey: document.getElementById('set-payment-api-key').value,
+        paymentCurrency: document.getElementById('set-payment-currency').value,
+        paymentConversionRate: document.getElementById('set-payment-rate').value,
+        tiktokHandle: document.getElementById('set-tiktok').value,
+        tiktokFollowers: document.getElementById('set-tiktok-followers').value,
+        instagram: document.getElementById('set-instagram').value,
+        contactEmail: document.getElementById('set-contact-email').value,
+        emailProvider: document.getElementById('set-email-provider').value,
+        siteName: document.getElementById('set-site-name').value,
+        siteUrl: document.getElementById('set-site-url').value,
+        googleAnalyticsId: document.getElementById('set-ga-id').value,
+        guaranteeDays: parseInt(document.getElementById('set-guarantee-days').value) || 30
+      };
+
+      try {
+        const res = await fetch('/api/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast('Paramètres sauvegardés avec succès !', 'success');
+        } else {
+          showToast('Erreur lors de la sauvegarde', 'error');
+        }
+      } catch (e) {
+        showToast('Erreur de connexion', 'error');
+      }
+    }
+
+    async function exportData(type) {
+      try {
+        let url = type === 'subscribers' ? '/api/subscribers' : type === 'articles' ? '/api/articles' : '/api/products';
+        const res = await fetch(url);
+        const data = await res.json();
+
+        let content, filename, mimeType;
+        if (type === 'subscribers') {
+          content = 'Email,Date,Statut\n' + data.map(s => `${s.email},${s.date || ''},${s.status || 'Actif'}`).join('\n');
+          filename = 'psydecode-abonnes.csv';
+          mimeType = 'text/csv';
+        } else {
+          content = JSON.stringify(data, null, 2);
+          filename = `psydecode-${type}.json`;
+          mimeType = 'application/json';
+        }
+
+        const blob = new Blob([content], { type: mimeType });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        showToast(`Fichier ${filename} téléchargé !`, 'success');
+      } catch (e) {
+        showToast('Erreur lors de l\'export', 'error');
+      }
+    }
+
+    initAdminStudio();
+    loadSettings();
+  </script>
+</body>
+</html>

@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PsyDécode — L'Art du Décryptage Humain, de la Séduction et du Charisme</title>
+  <meta name="description" content="Plateforme officielle PsyDécode. Maîtrisez le langage corporel, les dynamiques d'attraction, la psychologie et déjouez la manipulation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    /* Hero customizations */
+    .hero {
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      background: radial-gradient(circle at 75% 30%, rgba(184,130,30,0.15) 0%, rgba(15,12,9,0.95) 70%), url('/images/hero.jpg') center/cover no-repeat;
+      padding: 120px var(--px) 80px;
+      color: #fff;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(14,10,7,0.96) 30%, rgba(14,10,7,0.7) 70%, rgba(14,10,7,0.4) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 10;
+      max-width: 680px;
+    }
+    .tiktok-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(184,130,30,0.15);
+      border: 1px solid rgba(184,130,30,0.4);
+      padding: 6px 14px;
+      border-radius: 30px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #E8A93C;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 5vw, 62px);
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, #fff 40%, #E8A93C 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.7;
+      margin-bottom: 34px;
+      font-weight: 300;
+    }
+    .hero-cta {
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #B8821E, #E8A93C);
+      color: #111;
+      padding: 14px 28px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 14.5px;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.25s ease;
+      box-shadow: 0 8px 24px rgba(184,130,30,0.35);
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(184,130,30,0.5);
+    }
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      padding: 14px 26px;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 14.5px;
+      transition: all 0.25s ease;
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: #fff;
+    }
+
+    /* Stats strip */
+    .stats-strip {
+      background: #14100c;
+      border-top: 1px solid rgba(184,130,30,0.25);
+      border-bottom: 1px solid rgba(184,130,30,0.25);
+      padding: 30px var(--px);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      text-align: center;
+    }
+    .stat-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 34px;
+      color: #E8A93C;
+      margin-bottom: 4px;
+    }
+    .stat-box p {
+      font-size: 13px;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Sections */
+    .section-wrap {
+      padding: 90px var(--px);
+      max-width: 1340px;
+      margin: 0 auto;
+    }
+    .section-head {
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto 54px;
+    }
+    .section-tag {
+      color: #B8821E;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .section-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      color: #1a1612;
+      margin-bottom: 14px;
+    }
+    .section-head p {
+      color: #666;
+      font-size: 15px;
+    }
+
+    /* Article Grid */
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+    }
+    .article-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    .article-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.12);
+    }
+    .card-thumb {
+      height: 220px;
+      overflow: hidden;
+      position: relative;
+    }
+    .card-thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .article-card:hover .card-thumb img {
+      transform: scale(1.05);
+    }
+    .card-cat {
+      position: absolute; top: 14px; left: 14px;
+      background: rgba(20,16,12,0.85);
+      color: #E8A93C;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 4px;
+      backdrop-filter: blur(4px);
+    }
+    .card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .card-meta {
+      display: flex; justify-content: space-between;
+      color: #888; font-size: 12px; margin-bottom: 10px;
+    }
+    .card-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      line-height: 1.35;
+      margin-bottom: 12px;
+      color: #1a1612;
+    }
+    .card-body p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    .card-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid #f0eae1;
+      padding-top: 14px;
+    }
+    .read-link {
+      font-weight: 700;
+      color: #B8821E;
+      font-size: 13.5px;
+      display: flex; align-items: center; gap: 4px;
+      transition: gap 0.2s ease;
+    }
+    .read-link:hover { gap: 8px; }
+    .btn-like {
+      background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; gap: 5px;
+      color: #888; font-size: 13px;
+      transition: color 0.2s;
+    }
+    .btn-like.liked { color: #e11d48; font-weight: bold; }
+
+    /* Interactive Signal Decoder Widget */
+    .decoder-widget {
+      background: #181410;
+      border: 1px solid rgba(184,130,30,0.3);
+      border-radius: 14px;
+      padding: 44px;
+      color: #fff;
+      margin: 80px 0;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+    .decoder-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    @media (max-width: 860px) {
+      .decoder-grid { grid-template-columns: 1fr; }
+    }
+    .select-signal {
+      width: 100%;
+      padding: 14px;
+      background: #241e17;
+      border: 1px solid #483928;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 15px;
+      margin-top: 12px;
+      outline: none;
+    }
+    .decoder-result {
+      background: rgba(255,255,255,0.03);
+      border-left: 4px solid #B8821E;
+      padding: 24px;
+      border-radius: 0 8px 8px 0;
+    }
+    .decoder-result h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: #E8A93C;
+      margin-bottom: 8px;
+    }
+
+    /* Product Section */
+    .products-bg {
+      background: #14100c;
+      color: #fff;
+      padding: 90px var(--px);
+    }
+    .products-bg .section-head h2 { color: #fff; }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 30px;
+      max-width: 1340px;
+      margin: 0 auto;
+    }
+    .product-card {
+      background: #1c1813;
+      border: 1px solid rgba(184,130,30,0.25);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      border-color: #B8821E;
+      box-shadow: 0 16px 40px rgba(184,130,30,0.2);
+    }
+    .prod-badge {
+      position: absolute; top: 14px; right: 14px;
+      background: linear-gradient(135deg, #B8821E, #E8A93C);
+      color: #111; font-weight: 800; font-size: 11px;
+      padding: 4px 10px; border-radius: 4px;
+    }
+    .prod-img { height: 210px; overflow: hidden; }
+    .prod-img img { width: 100%; height: 100%; object-fit: cover; }
+    .prod-body { padding: 26px; display: flex; flex-direction: column; flex-grow: 1; }
+    .prod-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 21px; margin-bottom: 8px; color: #fff;
+    }
+    .prod-subtitle { color: #a59b8d; font-size: 13px; margin-bottom: 16px; }
+    .prod-price {
+      font-size: 28px; font-weight: 700; color: #E8A93C; margin-bottom: 18px;
+    }
+    .prod-price strike { font-size: 16px; color: #777; margin-right: 8px; font-weight: normal; }
+    .prod-features { list-style: none; margin-bottom: 24px; flex-grow: 1; }
+    .prod-features li {
+      font-size: 13px; color: #ccc; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .prod-features li::before {
+      content: '✓'; color: #B8821E; font-weight: bold;
+    }
+    .btn-buy {
+      background: #B8821E; color: #fff;
+      border: none; padding: 14px; border-radius: 6px;
+      font-weight: 700; font-size: 14px; cursor: pointer;
+      text-align: center; transition: all 0.2s;
+    }
+    .btn-buy:hover { background: #E8A93C; color: #111; }
+
+    /* Newsletter section */
+    .newsletter-banner {
+      background: linear-gradient(135deg, #1b1611 0%, #2a2016 100%);
+      border: 1px solid rgba(184,130,30,0.3);
+      border-radius: 14px;
+      padding: 60px 40px;
+      margin: 80px auto;
+      max-width: 1000px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .newsletter-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 34px; color: #fff; margin-bottom: 12px;
+    }
+    .newsletter-banner p {
+      color: #bbb; max-width: 580px; margin: 0 auto 30px; font-size: 15px;
+    }
+    .news-form-inline {
+      display: flex; gap: 10px; max-width: 500px; margin: 0 auto;
+    }
+    .news-form-inline input {
+      flex: 1; padding: 14px 18px; border-radius: 6px;
+      border: 1px solid #483928; background: #241e17; color: #fff; outline: none;
+    }
+    .news-form-inline button {
+      background: #B8821E; color: #fff; border: none; padding: 14px 24px;
+      border-radius: 6px; font-weight: 700; cursor: pointer; white-space: nowrap;
+    }
+    .news-form-inline button:hover { background: #E8A93C; color: #111; }
+
+    /* Footer */
+    footer {
+      background: #0d0a08;
+      border-top: 1px solid rgba(184,130,30,0.2);
+      padding: 60px var(--px) 30px;
+      color: #888;
+      font-size: 13.5px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      max-width: 1340px;
+      margin: 0 auto 50px;
+    }
+    @media (max-width: 800px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+    .footer-col h4 {
+      color: #fff; font-size: 15px; font-weight: 600; margin-bottom: 18px;
+    }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a:hover { color: #E8A93C; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 24px;
+      text-align: center;
+      max-width: 1340px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-brand">
+      <img src="/images/article-seduction.jpg" alt="Logo PsyDécode" class="brand-logo">
+      <div>
+        <a href="/" class="brand-name">PsyDécode</a>
+        <span class="brand-tag">Décryptage & Psychologie</span>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="/" class="active">Accueil</a></li>
+      <li><a href="/articles">Analyses & Articles</a></li>
+      <li><a href="/boutique">Guides & E-books</a></li>
+      <li><a href="/#decoder">Décodeur Non-Verbal</a></li>
+      <li><a href="/admin">Dashboard Admin</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <a href="https://www.tiktok.com/@psydecode" target="_blank" rel="noopener" class="btn-subscribe">
+        TikTok @psydecode
+      </a>
+      <div class="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-content anim-up">
+      <div class="tiktok-badge">
+        <span style="display:inline-block; width:7px; height:7px; background:#E8A93C; border-radius:50%; margin-right:6px; box-shadow:0 0 10px #E8A93C;"></span> Communauté TikTok : <strong>250 000+ Passionnés</strong>
+      </div>
+      <h1>L'Art Invisible de la <span>Séduction & du Décryptage Humain</span></h1>
+      <p>Apprenez à lire les micro-expressions, décoder l'intérêt secret et développer un charisme silencieux que personne ne peut ignorer.</p>
+      <div class="hero-cta">
+        <a href="/boutique" class="btn-gold">Accéder aux Protocoles d'Élite →</a>
+        <a href="/articles" class="btn-outline">Explorer les Analyses Gratuites</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Stats Strip -->
+  <section class="stats-strip">
+    <div class="stat-box">
+      <h3>250 000+</h3>
+      <p>Abonnés TikTok</p>
+    </div>
+    <div class="stat-box">
+      <h3>15 000 000+</h3>
+      <p>Vues Cumulées</p>
+    </div>
+    <div class="stat-box">
+      <h3>4 800+</h3>
+      <p>Lecteurs d'E-books</p>
+    </div>
+    <div class="stat-box">
+      <h3>99.2%</h3>
+      <p>Satisfaction Client</p>
+    </div>
+  </section>
+
+  <!-- Featured Articles Section -->
+  <main class="section-wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Analyses & Psychologie Sombre</span>
+      <h2>Les Derniers Décodages Stratégiques</h2>
+      <p>Chaque article est une dissection rigoureuse des mécanismes inconscients de l'attraction, du pouvoir et de la persuasion.</p>
+    </div>
+
+    <div class="article-grid" id="featured-articles-list">
+      <!-- Dynamic Articles from API will load here -->
+    </div>
+
+    <div style="text-align: center; margin-top: 40px;">
+      <a href="/articles" class="btn-gold" style="background:#1a1612; color:#E8A93C; border:1px solid #B8821E;">
+        Voir Tous les Articles & Dossiers Secrets (6+) →
+      </a>
+    </div>
+
+    <!-- Interactive Signal Decoder Widget -->
+    <section id="decoder" class="decoder-widget reveal">
+      <div class="decoder-grid">
+        <div>
+          <span style="color:#E8A93C; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Décodage Comportemental</span>
+          <h3 style="font-family:'Playfair Display', serif; font-size:28px; margin:8px 0 14px;">Décodeur de Micro-Signaux</h3>
+          <p style="color:#aaa; font-size:14.5px; line-height:1.6; margin-bottom:20px;">
+            Sélectionnez une posture ou un geste observé chez votre interlocuteur pour révéler instantanément sa signification psychologique sous-jacente.
+          </p>
+
+          <label style="font-size:13px; color:#ddd; font-weight:600;">Comportement observé :</label>
+          <select id="signal-selector" class="select-signal">
+            <option value="feet">Les pieds pointent vers vous lors d'un groupe</option>
+            <option value="touch-neck">La main effleure le cou ou la carotide</option>
+            <option value="blink-slow">Ralentissement des battements de paupières</option>
+            <option value="mirroring">Elle / Il reproduit vos gestes quelques secondes après</option>
+            <option value="pupils">Dilatation visible des pupilles en lumière tamisée</option>
+          </select>
+        </div>
+
+        <div class="decoder-result">
+          <div style="font-size:11px; text-transform:uppercase; color:#B8821E; font-weight:700; margin-bottom:4px;">Diagnostic Psychologique</div>
+          <h4 id="diag-title">Attraction Inconsciente & Intérêt Prioritaire</h4>
+          <p id="diag-desc" style="color:#ccc; font-size:14px; line-height:1.6;">
+            Les membres inférieurs sont pilotés par le système limbique le plus primitif. Lorsque les pieds d'un individu pointent vers vous malgré une orientation du buste vers quelqu'un d'autre, son focus émotionnel réel est fixé sur vous.
+          </p>
+          <div style="margin-top:14px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.08); font-size:12px; color:#E8A93C;">
+            <strong>Calibrage Recommandé :</strong> Rapprochez subtilement votre posture sans rompre le regard pour confirmer l'accord non-verbal.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seductive Audio Experience -->
+    <section class="audio-sec-wrap reveal" id="audio-experience">
+      <div class="audio-sec-grid">
+        <div>
+          <span class="audio-meta-tag">Immersion Sensorielle & Neuro-Acoustique</span>
+          <h2 class="audio-title">Le Magnétisme Vocal & L'Art du Silence Émotionnel</h2>
+          <p class="audio-desc">
+            Dans la séduction et l'amour, 38% de l'attraction inconsciente passe par la résonance vocale, la lenteur du débit et les micro-silences. Écoutez cet extrait immersif calibré sur les fréquences d'apaisement limbique (432 Hz) et découvrez le pouvoir d'une voix qui commande l'attention sans jamais forcer.
+          </p>
+          <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+            <button class="btn-gold btn-buy" data-id="prod-3" data-name="Charisme Alpha & Voix Hypnotique" data-price="37.00">
+              Débloquer le Programme Audio Complet (37 €) →
+            </button>
+            <span style="font-size:12px; color:#888;">21 Modules Audio MP3 HD • Compatible Smartphone</span>
+          </div>
+        </div>
+
+        <div class="audio-player-card">
+          <div class="audio-track-current">
+            <div>
+              <div class="audio-track-subtitle" id="player-track-sub">Module Audio d'Attraction</div>
+              <div class="audio-track-title" id="player-track-title">Session 1 : Pose de Voix & Tension Positive</div>
+            </div>
+            <div style="background:rgba(184,130,30,0.18); color:#E8A93C; font-size:11px; font-weight:700; padding:4px 10px; border-radius:12px; border:1px solid rgba(184,130,30,0.3);">
+              432 Hz
+            </div>
+          </div>
+
+          <!-- Equalizer Animation -->
+          <div class="equalizer-wrap" id="audio-equalizer">
+            <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+            <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+            <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+            <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+            <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+            <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+            <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+            <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+          </div>
+
+          <!-- Controls -->
+          <div class="audio-controls">
+            <button id="btn-toggle-audio" class="btn-audio-play" title="Écouter l'extrait">
+              <svg id="play-icon-svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            </button>
+
+            <div class="audio-progress-bar-wrap">
+              <div class="audio-progress-track" id="audio-progress-track">
+                <div class="audio-progress-fill" id="audio-progress-fill"></div>
+              </div>
+              <div class="audio-time-row">
+                <span id="audio-current-time">0:00</span>
+                <span id="audio-total-time">3:42</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Playlist -->
+          <div class="audio-playlist">
+            <div class="playlist-item active" onclick="selectAudioTrack(0, 'Session 1 : Pose de Voix & Tension Positive', 'Module Audio d\'Attraction', '3:42')">
+              <span>01 • Pose de Voix & Tension Positive</span>
+              <span style="font-size:11px; opacity:0.7;">3:42</span>
+            </div>
+            <div class="playlist-item" onclick="selectAudioTrack(1, 'Session 2 : Le Ralentissement du Débit Séducteur', 'Calibration Non-Verbale', '4:15')">
+              <span>02 • Le Ralentissement du Débit Séducteur</span>
+              <span style="font-size:11px; opacity:0.7;">4:15</span>
+            </div>
+            <div class="playlist-item" onclick="selectAudioTrack(2, 'Session 3 : Désamorcer les Résistances Inconscientes', 'Psychologie Subconsciente', '5:08')">
+              <span>03 • Désamorcer les Résistances Inconscientes</span>
+              <span style="font-size:11px; opacity:0.7;">5:08</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Products / E-books Section -->
+  <section class="products-bg">
+    <div class="section-head reveal">
+      <span class="section-tag" style="color:#E8A93C;">Boutique Officielle</span>
+      <h2>Protocoles & Guides Pratiques</h2>
+      <p style="color:#aaa;">Des systèmes d'application directe pour transformer votre magnétisme social dès cette semaine.</p>
+    </div>
+
+    <div class="product-grid" id="products-list">
+      <!-- Dynamic Products from API will load here -->
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <div class="section-wrap">
+    <div class="newsletter-banner reveal">
+      <h2>Rejoignez le Cercle Privé PsyDécode</h2>
+      <p>Recevez chaque dimanche une analyse exclusive non publiée sur TikTok, directement dans votre boîte mail.</p>
+      <form class="news-form-inline newsletter-form">
+        <input type="email" placeholder="Votre adresse email personnelle" required>
+        <button type="submit">Rejoindre Gratuitement</button>
+      </form>
+      <div style="color: #777; font-size: 11px; margin-top: 12px;">Garanti zéro spam • Désinscription en 1 clic.</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4 style="font-family:'Playfair Display', serif; font-size:20px; color:#E8A93C;">PsyDécode</h4>
+        <p style="line-height:1.7; margin-bottom:16px;">
+          La référence du décodage comportemental, de l'ingénierie sociale et de la psychologie appliquée à la séduction contemporaine.
+        </p>
+        <p style="font-size:12px; color:#666;">Créé en symbiose avec la communauté TikTok @psydecode.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/articles">Tous les Articles</a></li>
+          <li><a href="/boutique">Boutique & E-books</a></li>
+          <li><a href="/#decoder">Décodeur de Signaux</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Catégories</h4>
+        <ul>
+          <li><a href="/articles?category=seduction">Séduction & Attraction</a></li>
+          <li><a href="/articles?category=langage-corporel">Langage Corporel</a></li>
+          <li><a href="/articles?category=charisme">Charisme Alpha</a></li>
+          <li><a href="/articles?category=manipulation">Défense Mentale</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Informations & Légal</h4>
+        <ul>
+          <li><a href="/cgv">Conditions Générales de Vente (CGV)</a></li>
+          <li><a href="/cgv#mentions">Mentions Légales</a></li>
+          <li><a href="/cgv#confidentialite">Politique de Confidentialité</a></li>
+          <li><a href="/contact">Contact & Support Client</a></li>
+          <li><a href="/admin">Accès Administration</a></li>
+          <li><a href="https://www.tiktok.com/@psydecode" target="_blank" rel="noopener">TikTok Officiel @psydecode</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div style="margin-bottom: 12px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+        <a href="/cgv" style="color: #E8A93C; text-decoration: underline;">CGV</a>
+        <a href="/cgv#mentions" style="color: #aaa;">Mentions Légales</a>
+        <a href="/cgv#confidentialite" style="color: #aaa;">Données Personnelles (RGPD)</a>
+        <a href="/contact" style="color: #aaa;">Support Client</a>
+      </div>
+      &copy; 2026 PsyDécode. Tous droits réservés.
+    </div>
+  </footer>
+
+  <script src="/js/main.js?v=2026103002"></script>
+  <script>
+    // Load Articles and Products dynamically from API
+    async function loadHomeData() {
+      try {
+        // 1. Articles
+        const artRes = await fetch('/api/articles?featured=true');
+        const articles = await artRes.json();
+        const articlesContainer = document.getElementById('featured-articles-list');
+        
+        if (articles && articles.length > 0) {
+          articlesContainer.innerHTML = articles.slice(0, 3).map(art => `
+            <article class="article-card reveal">
+              <div class="card-thumb">
+                <img src="${art.image}" alt="${art.title}" loading="lazy">
+                <span class="card-cat">${art.categoryName || art.category}</span>
+              </div>
+              <div class="card-body">
+                <div class="card-meta">
+                  <span>📅 ${art.date}</span>
+                  <span>⏱ ${art.readTime}</span>
+                </div>
+                <h3>${art.title}</h3>
+                <p>${art.excerpt}</p>
+                <div class="card-foot">
+                  <a href="/article?id=${art.id}" class="read-link">Lire le décodage →</a>
+                  <button class="btn-like" data-id="${art.id}">
+                    ♥ <span class="like-count">${art.likes || 0}</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+          `).join('');
+        }
+
+        // 2. Products
+        const prodRes = await fetch('/api/products');
+        const products = await prodRes.json();
+        const prodContainer = document.getElementById('products-list');
+
+        if (products && products.length > 0) {
+          prodContainer.innerHTML = products.map(prod => `
+            <div class="product-card reveal">
+              ${prod.badge ? `<span class="prod-badge">${prod.badge}</span>` : ''}
+              <div class="prod-img">
+                <img src="${prod.image}" alt="${prod.name}" loading="lazy">
+              </div>
+              <div class="prod-body">
+                <h3>${prod.name}</h3>
+                <div class="prod-subtitle">${prod.subtitle}</div>
+                <div class="prod-price">
+                  ${prod.originalPrice ? `<strike>${prod.originalPrice} €</strike>` : ''}
+                  ${prod.price} €
+                </div>
+                <ul class="prod-features">
+                  ${prod.features ? prod.features.map(f => `<li>${f}</li>`).join('') : ''}
+                </ul>
+                <button class="btn-buy" data-id="${prod.id}" data-name="${prod.name}" data-price="${prod.price}">
+                  Commander & Télécharger (${prod.price} €)
+                </button>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        // Re-initialize reveals
+        if (typeof initScrollReveal === 'function') initScrollReveal();
+      } catch (e) {
+        console.error('Error loading home data:', e);
+      }
+    }
+
+    // Interactive Decoder signal definitions
+    const signalData = {
+      'feet': {
+        title: "Attraction Inconsciente & Intérêt Prioritaire",
+        desc: "Les membres inférieurs sont pilotés par le système limbique le plus primitif. Lorsque les pieds d'un individu pointent vers vous malgré une orientation du buste vers quelqu'un d'autre, son focus émotionnel réel est fixé sur vous.",
+        action: "Rapprochez subtilement votre posture sans rompre le regard pour confirmer l'accord non-verbal."
+      },
+      'touch-neck': {
+        title: "Réceptivité Émotionnelle & Diminution des Défenses",
+        desc: "Exposer et caresser la zone vulnérable du cou (jugulaire et carotide) trahit une hausse du rythme cardiaque et une mise en confiance instinctive face à votre présence.",
+        action: "Baissez légèrement votre tonalité vocale et laissez un court silence pour intensifier la tension positive."
+      },
+      'blink-slow': {
+        title: "Absorption Attentionnelle & Transe Conversationnelle",
+        desc: "Lorsque le clignement passe de 15 battements par minute à moins de 6, le cerveau filtre les stimuli environnants pour se concentrer uniquement sur vos lèvres et vos yeux.",
+        action: "Utilisez le regard triangulaire (œil gauche - œil droit - lèvres) pour sceller la connexion."
+      },
+      'mirroring': {
+        title: "Synchronie Inconsciente de Confort",
+        desc: "Prendre sa boisson quand vous buvez ou calquer votre inclinaison corporelle indique que ses neurones miroirs ont adopté votre tempo.",
+        action: "Changez volontairement de posture pour tester si l'autre vous suit : c'est le test suprême de leadership relationnel."
+      },
+      'pupils': {
+        title: "Excitation Neurologique & Décharge de Dopamine",
+        desc: "Dans un environnement à luminosité stable, l'élargissement de la pupille (mydriase sympathique) est une réponse involontaire à la perception d'un stimulus hautement gratifiant.",
+        action: "Ne fuyez pas l'intensité de cet échange visuel, c'est le moment charnière."
+      }
+    };
+
+    document.getElementById('signal-selector').addEventListener('change', (e) => {
+      const val = e.target.value;
+      const data = signalData[val];
+      if (data) {
+        document.getElementById('diag-title').textContent = data.title;
+        document.getElementById('diag-desc').innerHTML = data.desc + `<div style="margin-top:14px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.08); font-size:12px; color:#E8A93C;"><strong>Calibrage Recommandé :</strong> ${data.action}</div>`;
+      }
+    });
+
+    // Audio Player Experience (Web Audio API Harmonic Frequency)
+    let audioCtx = null;
+    let osc1 = null;
+    let osc2 = null;
+    let gainNode = null;
+    let isAudioPlaying = false;
+    let audioTimer = null;
+    let currentSeconds = 0;
+    const trackDurations = [222, 255, 308]; // seconds
+    let activeTrackIdx = 0;
+
+    function initWebAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function startHypnoticTone(freq = 432) {
+      initWebAudio();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      gainNode = audioCtx.createGain();
+      gainNode.gain.setValueAtTime(0.001, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.12, audioCtx.currentTime + 1.2);
+      gainNode.connect(audioCtx.destination);
+
+      // Warm binaural frequency
+      osc1 = audioCtx.createOscillator();
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      osc1.connect(gainNode);
+      osc1.start();
+
+      osc2 = audioCtx.createOscillator();
+      osc2.type = 'triangle';
+      osc2.frequency.setValueAtTime(freq / 2, audioCtx.currentTime);
+      osc2.connect(gainNode);
+      osc2.start();
+    }
+
+    function stopHypnoticTone() {
+      if (gainNode && audioCtx) {
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.6);
+        setTimeout(() => {
+          if (osc1) { osc1.stop(); osc1.disconnect(); osc1 = null; }
+          if (osc2) { osc2.stop(); osc2.disconnect(); osc2 = null; }
+        }, 600);
+      }
+    }
+
+    const btnPlay = document.getElementById('btn-toggle-audio');
+    const eq = document.getElementById('audio-equalizer');
+    const fill = document.getElementById('audio-progress-fill');
+    const timeCurrent = document.getElementById('audio-current-time');
+    const timeTotal = document.getElementById('audio-total-time');
+
+    function toggleAudio() {
+      if (!isAudioPlaying) {
+        isAudioPlaying = true;
+        eq.classList.add('playing');
+        btnPlay.innerHTML = `<svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:#111;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
+        startHypnoticTone(432);
+
+        audioTimer = setInterval(() => {
+          currentSeconds++;
+          const maxSec = trackDurations[activeTrackIdx];
+          const pct = Math.min((currentSeconds / maxSec) * 100, 100);
+          fill.style.width = pct + '%';
+          const m = Math.floor(currentSeconds / 60);
+          const s = String(currentSeconds % 60).padStart(2, '0');
+          timeCurrent.textContent = `${m}:${s}`;
+
+          if (currentSeconds >= maxSec) {
+            toggleAudio();
+            currentSeconds = 0;
+            fill.style.width = '0%';
+          }
+        }, 1000);
+      } else {
+        isAudioPlaying = false;
+        eq.classList.remove('playing');
+        btnPlay.innerHTML = `<svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:#111;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
+        stopHypnoticTone();
+        clearInterval(audioTimer);
+      }
+    }
+
+    if (btnPlay) {
+      btnPlay.addEventListener('click', toggleAudio);
+    }
+
+    window.selectAudioTrack = function(idx, title, sub, durationStr) {
+      activeTrackIdx = idx;
+      document.querySelectorAll('.playlist-item').forEach((item, i) => {
+        if (i === idx) item.classList.add('active');
+        else item.classList.remove('active');
+      });
+
+      document.getElementById('player-track-title').textContent = title;
+      document.getElementById('player-track-sub').textContent = sub;
+      timeTotal.textContent = durationStr;
+      currentSeconds = 0;
+      fill.style.width = '0%';
+      timeCurrent.textContent = '0:00';
+
+      if (isAudioPlaying) {
+        stopHypnoticTone();
+        const baseFreqs = [432, 528, 396];
+        setTimeout(() => startHypnoticTone(baseFreqs[idx] || 432), 400);
+      }
+    };
+
+    loadHomeData();
+  </script>
+</body>
+</html>

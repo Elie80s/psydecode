@@ -1,0 +1,30 @@
+[
+  {
+    "id": "sub-1793268256619",
+    "email": "test@psydecode.com",
+    "date": "2026-10-29T10:04:16.619Z",
+    "source": "Site Web",
+    "status": "Actif"
+  },
+  {
+    "id": "sub-1",
+    "email": "alex.martin@gmail.com",
+    "date": "2026-10-27T14:32:00Z",
+    "source": "Newsletter Hero",
+    "status": "Actif"
+  },
+  {
+    "id": "sub-2",
+    "email": "sarah.b@outlook.fr",
+    "date": "2026-10-28T09:15:00Z",
+    "source": "TikTok Bio Link",
+    "status": "Actif"
+  },
+  {
+    "id": "sub-3",
+    "email": "lucas.dev@proton.me",
+    "date": "2026-10-28T18:45:00Z",
+    "source": "Diagnostic Quiz",
+    "status": "Actif"
+  }
+]

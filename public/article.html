@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article — PsyDécode</title>
+  <meta name="description" content="Analyse et décodage comportemental par PsyDécode — psychologie, séduction, non-verbal.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    /* Reading Progress Bar */
+    #progress-bar {
+      position: fixed; top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(to right, #B8821E, #E8A93C, #fff);
+      width: 0%; z-index: 9999; transition: width 0.1s;
+      box-shadow: 0 0 10px rgba(232,169,60,0.5);
+    }
+
+    .article-hero {
+      background: #14100c;
+      padding: 130px var(--px) 50px;
+      color: #fff;
+      border-bottom: 1px solid rgba(184,130,30,0.25);
+    }
+    .article-hero-wrap { max-width: 860px; margin: 0 auto; }
+    .hero-cat-tag {
+      display: inline-block;
+      background: rgba(184,130,30,0.18); color: #E8A93C;
+      font-size: 11.5px; font-weight: 700; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 4px;
+      border: 1px solid rgba(184,130,30,0.3); margin-bottom: 16px;
+    }
+    .article-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4.5vw, 46px);
+      line-height: 1.25; margin-bottom: 20px;
+    }
+    .article-meta-bar {
+      display: flex; align-items: center; gap: 20px;
+      color: #888; font-size: 13.5px; flex-wrap: wrap;
+    }
+    .article-meta-bar span { display: flex; align-items: center; gap: 6px; }
+
+    .article-wrap {
+      max-width: 860px; margin: 0 auto;
+      padding: 0 var(--px) 80px;
+    }
+    .breadcrumb {
+      padding: 24px 0 0;
+      font-size: 13px; color: #888;
+    }
+    .breadcrumb a { color: #B8821E; font-weight: 600; }
+    .breadcrumb a:hover { color: #E8A93C; }
+
+    .article-featured-image {
+      width: 100%; border-radius: 12px;
+      max-height: 480px; object-fit: cover;
+      margin: 30px 0 44px;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.12);
+      display: block;
+    }
+    .article-prose {
+      font-size: 17.5px; line-height: 1.9; color: #2c251f;
+    }
+    .article-prose h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px; color: #1a1612;
+      margin: 44px 0 18px;
+      border-left: 4px solid #B8821E;
+      padding-left: 16px;
+    }
+    .article-prose p { margin-bottom: 24px; }
+    .article-prose blockquote {
+      border-left: 4px solid #B8821E;
+      background: linear-gradient(to right, #f5ede0, #fdf9f4);
+      padding: 22px 28px; margin: 32px 0;
+      border-radius: 0 10px 10px 0;
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: 20px; color: #1a1612;
+      box-shadow: 0 4px 16px rgba(184,130,30,0.08);
+    }
+    .article-prose ul {
+      margin: 20px 0 30px 0; list-style: none;
+    }
+    .article-prose ul li {
+      margin-bottom: 12px;
+      padding-left: 24px; position: relative;
+    }
+    .article-prose ul li::before {
+      content: '→'; color: #B8821E; font-weight: bold;
+      position: absolute; left: 0;
+    }
+
+    /* Tags */
+    .article-tags {
+      margin: 36px 0;
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .article-tag {
+      background: #eee8df; color: #555;
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 12.5px; font-weight: 600;
+      transition: all 0.2s;
+    }
+    .article-tag:hover { background: #B8821E; color: #fff; }
+
+    /* Actions bar */
+    .article-actions {
+      border-top: 1px solid #dcd4c7;
+      border-bottom: 1px solid #dcd4c7;
+      padding: 22px 0; margin: 44px 0;
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+    .like-big-btn {
+      background: #181410; color: #fff;
+      border: 1px solid #B8821E; padding: 12px 24px;
+      border-radius: 30px; font-size: 15px; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center; gap: 8px;
+      transition: all 0.25s;
+    }
+    .like-big-btn:hover { background: #B8821E; transform: scale(1.04); }
+    .like-big-btn.liked { background: #e11d48; border-color: #e11d48; }
+    .share-btn {
+      background: #f0ece5; border: 1px solid #dcd4c7;
+      padding: 10px 20px; border-radius: 30px;
+      font-size: 13.5px; font-weight: 600; cursor: pointer;
+      transition: all 0.2s; display: flex; align-items: center; gap: 7px;
+    }
+    .share-btn:hover { background: #e5ddd3; }
+
+    /* Product Callout */
+    .product-callout {
+      background: linear-gradient(135deg, #181410 0%, #231c14 100%);
+      border: 1px solid rgba(184,130,30,0.35);
+      border-radius: 14px; padding: 34px; color: #fff;
+      margin: 50px 0;
+      display: flex; gap: 30px; align-items: center;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+      position: relative; overflow: hidden;
+    }
+    .product-callout::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(184,130,30,0.12) 0%, transparent 70%);
+    }
+    .product-callout img {
+      width: 120px; height: 120px; object-fit: cover;
+      border-radius: 10px; border: 2px solid #B8821E;
+      flex-shrink: 0; position: relative; z-index: 1;
+    }
+    .product-callout > div { position: relative; z-index: 1; }
+    @media (max-width: 700px) {
+      .product-callout { flex-direction: column; text-align: center; }
+    }
+
+    /* Related articles */
+    .related-section { margin-top: 60px; }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 24px; }
+    .related-card {
+      background: #fff; border-radius: 10px; overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+      border: 1px solid rgba(0,0,0,0.05); transition: all 0.3s;
+    }
+    .related-card:hover { transform: translateY(-5px); box-shadow: 0 12px 28px rgba(0,0,0,0.12); }
+    .related-card-img { height: 160px; overflow: hidden; }
+    .related-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .related-card:hover .related-card-img img { transform: scale(1.06); }
+    .related-card-body { padding: 16px; }
+    .related-card-body h4 { font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.35; color: #1a1612; margin-bottom: 6px; }
+    .related-card-body a { font-weight: 700; color: #B8821E; font-size: 12.5px; }
+  </style>
+</head>
+<body>
+
+  <div id="progress-bar"></div>
+
+  <!-- Navigation -->
+  <nav style="background: rgba(20, 14, 6, 0.96);">
+    <div class="nav-brand">
+      <img src="/images/article-seduction.jpg" alt="Logo PsyDécode" class="brand-logo">
+      <div>
+        <a href="/" class="brand-name">PsyDécode</a>
+        <span class="brand-tag">Décryptage & Psychologie</span>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="/">Accueil</a></li>
+      <li><a href="/articles" class="active">Analyses & Articles</a></li>
+      <li><a href="/boutique">Guides & E-books</a></li>
+      <li><a href="/#decoder">Décodeur Non-Verbal</a></li>
+      <li><a href="/admin">Dashboard Admin</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <a href="https://www.tiktok.com/@psydecode" target="_blank" rel="noopener" class="btn-subscribe">
+        TikTok @psydecode
+      </a>
+      <div class="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Article Hero (dark) -->
+  <header class="article-hero">
+    <div class="article-hero-wrap">
+      <span class="hero-cat-tag" id="art-category">Chargement...</span>
+      <h1 id="art-title">Chargement de l'analyse...</h1>
+      <div class="article-meta-bar">
+        <span>📅 <span id="art-date">--</span></span>
+        <span>⏱ <span id="art-time">--</span> de lecture</span>
+        <span>👁 <span id="art-views">--</span> lectures</span>
+        <span>♥ <span id="art-likes">--</span> soutiens</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Article Content -->
+  <div class="article-wrap">
+    <div class="breadcrumb">
+      <a href="/articles">← Retour à tous les articles & décodages</a>
+    </div>
+
+    <img id="art-img" src="/images/hero.jpg" alt="Illustration" class="article-featured-image">
+
+    <div class="article-prose" id="art-content">
+      <p style="color:#888; text-align:center; padding: 40px 0;">Chargement du contenu complet...</p>
+    </div>
+
+    <!-- Tags -->
+    <div class="article-tags" id="art-tags-container"></div>
+
+    <!-- Actions & Likes -->
+    <div class="article-actions">
+      <button id="main-like-btn" class="like-big-btn">
+        <span>♥</span> Soutenir ce décodage (<span id="likes-count-display">0</span>)
+      </button>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href); showToast('Lien copié dans le presse-papier !', 'success');">
+          🔗 Partager ce décodage
+        </button>
+        <a href="/boutique" style="background: linear-gradient(135deg,#B8821E,#E8A93C); color:#111; font-weight:700; border:none; padding:12px 22px; border-radius:30px; font-size:13.5px; cursor:pointer; display:flex; align-items:center; gap:7px;">
+          Boutique Officielle →
+        </a>
+      </div>
+    </div>
+
+    <!-- Recommended Product Callout -->
+    <div class="product-callout">
+      <img src="/images/article-seduction.jpg" alt="E-book PsyDécode" id="callout-img">
+      <div>
+        <span style="color:#E8A93C; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; display:block; margin-bottom:6px;">Aller Plus Loin →</span>
+        <h4 style="font-family:'Playfair Display', serif; font-size:22px; margin-bottom:8px;" id="callout-name">Le Code de la Séduction Silencieuse</h4>
+        <p style="color:#aaa; font-size:13.5px; line-height:1.6; margin-bottom:16px;" id="callout-desc">Maîtrisez l'ensemble des 12 protocoles neurobiologiques avec notre guide de référence (184 pages). Accès immédiat par téléchargement.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+          <button class="btn-buy btn-subscribe" id="callout-buy-btn" data-id="prod-1" data-name="Le Code de la Séduction Silencieuse" data-price="27" style="display:inline-block;">
+            Obtenir ce Guide (27 €) →
+          </button>
+          <a href="/boutique" style="color:#aaa; font-size:13px; text-decoration:underline;">Voir tous les guides</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Articles -->
+    <div class="related-section reveal">
+      <span style="color:#B8821E; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:2px;">Continuez votre décodage</span>
+      <h3 style="font-family:'Playfair Display', serif; font-size:26px; margin:8px 0 0; color:#1a1612;">Articles Connexes</h3>
+      <div class="related-grid" id="related-articles-grid">
+        <!-- Loaded dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="background: #0d0a08; border-top: 1px solid rgba(184,130,30,0.2); padding: 50px var(--px) 30px; color: #888; font-size: 13px; text-align: center;">
+    <div style="margin-bottom: 14px; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;">
+      <a href="/" style="color: #aaa;">Accueil</a>
+      <a href="/articles" style="color: #E8A93C; font-weight:bold;">Articles</a>
+      <a href="/boutique" style="color: #aaa;">Boutique</a>
+      <a href="/cgv" style="color: #aaa;">CGV</a>
+      <a href="/contact" style="color: #aaa;">Contact & Support</a>
+    </div>
+    <p>&copy; 2026 PsyDécode. La référence du décodage comportemental et de la séduction.</p>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    // Reading progress tracker
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = Math.min(scrolled, 100) + '%';
+    });
+
+    let currentArticleId = null;
+
+    async function loadArticle() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id') || '1';
+      currentArticleId = id;
+
+      try {
+        const res = await fetch(`/api/articles/${id}`);
+        if (!res.ok) throw new Error('Article non trouvé');
+        const art = await res.json();
+
+        document.title = `${art.title} — PsyDécode`;
+        document.querySelector('meta[name="description"]').content = art.excerpt;
+        document.getElementById('art-title').textContent = art.title;
+        document.getElementById('art-category').textContent = art.categoryName || art.category;
+        document.getElementById('art-date').textContent = art.date;
+        document.getElementById('art-time').textContent = art.readTime;
+        document.getElementById('art-views').textContent = (art.views || 0).toLocaleString();
+        document.getElementById('art-likes').textContent = (art.likes || 0).toLocaleString();
+        document.getElementById('likes-count-display').textContent = art.likes || 0;
+        document.getElementById('art-img').src = art.image || '/images/hero.jpg';
+        document.getElementById('art-img').alt = art.title;
+        document.getElementById('art-content').innerHTML = art.content || `<p>${art.excerpt}</p>`;
+
+        // Tags
+        if (art.tags && art.tags.length) {
+          document.getElementById('art-tags-container').innerHTML = art.tags.map(tag =>
+            `<span class="article-tag">#${tag}</span>`
+          ).join('');
+        }
+
+        // Like button
+        const likeBtn = document.getElementById('main-like-btn');
+        likeBtn.onclick = async () => {
+          try {
+            const lRes = await fetch(`/api/articles/${art.id}/like`, { method: 'POST' });
+            const lData = await lRes.json();
+            if (lRes.ok && lData.success) {
+              document.getElementById('likes-count-display').textContent = lData.likes;
+              document.getElementById('art-likes').textContent = lData.likes;
+              likeBtn.classList.add('liked');
+              showToast('Merci pour votre soutien ! ♥', 'success');
+            }
+          } catch (e) { console.error(e); }
+        };
+
+        // Load related articles
+        loadRelatedArticles(art.id, art.category);
+
+      } catch (err) {
+        document.getElementById('art-title').textContent = "Article introuvable";
+        document.getElementById('art-content').innerHTML = '<p>L\'article que vous recherchez n\'existe pas ou a été retiré. <a href="/articles" style="color:#B8821E; font-weight:bold;">Retourner aux articles</a></p>';
+      }
+    }
+
+    async function loadRelatedArticles(currentId, category) {
+      try {
+        const res = await fetch(`/api/articles?category=${category}`);
+        const articles = await res.json();
+        const related = articles.filter(a => a.id !== currentId).slice(0, 3);
+        const grid = document.getElementById('related-articles-grid');
+
+        if (related.length === 0) {
+          grid.parentElement.style.display = 'none';
+          return;
+        }
+
+        grid.innerHTML = related.map(a => `
+          <div class="related-card">
+            <div class="related-card-img">
+              <img src="${a.image}" alt="${a.title}" loading="lazy">
+            </div>
+            <div class="related-card-body">
+              <h4>${a.title}</h4>
+              <a href="/article?id=${a.id}">Lire l'analyse →</a>
+            </div>
+          </div>
+        `).join('');
+      } catch (e) { /* silently fail */ }
+    }
+
+    loadArticle();
+  </script>
+</body>
+</html>

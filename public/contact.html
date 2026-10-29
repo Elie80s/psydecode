@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact & Support Client — PsyDécode</title>
+  <meta name="description" content="Une question sur nos guides, votre commande ou un partenariat ? Contactez l'équipe officielle PsyDécode.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .contact-header {
+      background: radial-gradient(circle at 50% 30%, rgba(184,130,30,0.2) 0%, rgba(15,12,9,0.98) 75%), url('/images/hero.jpg') center/cover no-repeat;
+      padding: 130px var(--px) 60px;
+      text-align: center;
+      color: #fff;
+      border-bottom: 1px solid rgba(184,130,30,0.25);
+    }
+    .contact-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 4vw, 48px);
+      margin-bottom: 14px;
+    }
+    .contact-wrap {
+      max-width: 1100px;
+      margin: 60px auto 100px;
+      padding: 0 var(--px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+    }
+    @media (max-width: 850px) {
+      .contact-wrap { grid-template-columns: 1fr; }
+    }
+    .contact-card {
+      background: #fff;
+      border: 1px solid #e2dad0;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+    .contact-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      color: #1a1612;
+      margin-bottom: 12px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #444;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+      padding: 12px 14px;
+      border-radius: 6px;
+      border: 1px solid #d5cbc0;
+      font-size: 14px;
+      background: #fdfbf8;
+      outline: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: #B8821E;
+      background: #fff;
+    }
+    .btn-submit-contact {
+      background: linear-gradient(135deg, #B8821E, #E8A93C);
+      color: #111;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.2s;
+    }
+    .btn-submit-contact:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(184,130,30,0.35);
+    }
+
+    /* FAQ Box */
+    .faq-item {
+      background: #181410;
+      border: 1px solid rgba(184,130,30,0.25);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      color: #eee;
+    }
+    .faq-item h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: #E8A93C;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      color: #bbb;
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav style="background: rgba(20, 14, 6, 0.96);">
+    <div class="nav-brand">
+      <img src="/images/article-seduction.jpg" alt="Logo PsyDécode" class="brand-logo">
+      <div>
+        <a href="/" class="brand-name">PsyDécode</a>
+        <span class="brand-tag">Décryptage & Psychologie</span>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="/">Accueil</a></li>
+      <li><a href="/articles">Analyses & Articles</a></li>
+      <li><a href="/boutique">Guides & E-books</a></li>
+      <li><a href="/#decoder">Décodeur Non-Verbal</a></li>
+      <li><a href="/admin">Dashboard Admin</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <a href="https://www.tiktok.com/@psydecode" target="_blank" rel="noopener" class="btn-subscribe">
+        TikTok @psydecode
+      </a>
+      <div class="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <header class="contact-header">
+    <span style="color:#E8A93C; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:2px; display:block; margin-bottom:8px;">Assistance & Échanges</span>
+    <h1>Contact & Support PsyDécode</h1>
+    <p>Une question sur un protocole, un problème de téléchargement ou une demande de partenariat ? Nous vous répondons rapidement.</p>
+  </header>
+
+  <main class="contact-wrap">
+    <!-- Contact Form -->
+    <div class="contact-card">
+      <h2>Envoyez-nous un Message</h2>
+      <p style="color:#666; font-size:14px; margin-bottom:24px;">Remplissez le formulaire ci-dessous. Notre équipe dédiée vous répondra sous 24h ouvrées.</p>
+
+      <form id="contact-form">
+        <div class="form-group">
+          <label>Votre Prénom et Nom</label>
+          <input type="text" id="contact-name" required placeholder="Alexandre Martin">
+        </div>
+
+        <div class="form-group">
+          <label>Votre Adresse Email</label>
+          <input type="email" id="contact-email" required placeholder="alexandre@exemple.com">
+        </div>
+
+        <div class="form-group">
+          <label>Objet de votre demande</label>
+          <select id="contact-subject">
+            <option value="commande">Support Commande & Téléchargement</option>
+            <option value="question">Question sur un Guide / E-book</option>
+            <option value="partenariat">Partenariat & Médias</option>
+            <option value="autre">Autre demande</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Votre Message</label>
+          <textarea id="contact-message" rows="5" required placeholder="Expliquez votre situation ou posez votre question..."></textarea>
+        </div>
+
+        <button type="submit" id="btn-contact-submit" class="btn-submit-contact">
+          Transmettre Mon Message →
+        </button>
+      </form>
+    </div>
+
+    <!-- FAQ & Direct Contacts -->
+    <div>
+      <h2 style="font-family:'Playfair Display', serif; font-size:26px; color:#1a1612; margin-bottom:20px;">Questions Fréquentes</h2>
+
+      <div class="faq-item">
+        <h4>Comment récupérer mon guide après achat ?</h4>
+        <p>Le déblocage est <strong>instantané</strong>. Dès la validation de votre accès, votre code de licence unique s'affiche et votre fichier (PDF / Audio) est disponible au téléchargement direct.</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>Puis-je lire les e-books et écouter les audios sur mon smartphone ?</h4>
+        <p>Oui, parfaitement. Les guides sont au format PDF universel et les sessions audio au format MP3 haute fidélité, compatibles avec tous les smartphones (iPhone, Android), tablettes et ordinateurs.</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>Modalités de la garantie 30 jours</h4>
+        <p>Si après avoir expérimenté les protocoles pendant 14 jours vous ne constatez aucune transformation concrète dans votre magnétisme relationnel, écrivez-nous simplement pour un remboursement intégral sans condition.</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>Email direct du support :</h4>
+        <p style="color:#E8A93C; font-weight:bold; font-size:15px;">contact@psydecode.com</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer style="background: #0d0a08; border-top: 1px solid rgba(184,130,30,0.2); padding: 50px var(--px) 30px; color: #888; font-size: 13px; text-align: center;">
+    <div style="margin-bottom: 16px; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;">
+      <a href="/" style="color: #aaa;">Accueil</a>
+      <a href="/articles" style="color: #aaa;">Articles</a>
+      <a href="/boutique" style="color: #aaa;">Boutique</a>
+      <a href="/cgv" style="color: #aaa;">CGV & Mentions Légales</a>
+      <a href="/contact" style="color: #E8A93C; font-weight: bold;">Contact & Support</a>
+    </div>
+    <p>&copy; 2026 PsyDécode. Tous droits réservés.</p>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btn-contact-submit');
+      btn.disabled = true;
+      btn.textContent = 'Envoi en cours...';
+
+      const email = document.getElementById('contact-email').value;
+      const message = document.getElementById('contact-message').value;
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, message })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(data.message, 'success');
+          document.getElementById('contact-form').reset();
+        } else {
+          showToast(data.error || 'Erreur lors de l\'envoi', 'error');
+        }
+      } catch (err) {
+        showToast('Erreur de connexion', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Transmettre Mon Message →';
+      }
+    });
+  </script>
+</body>
+</html>

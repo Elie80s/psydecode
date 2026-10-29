@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commande Validée — PsyDécode</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      background: #0c0a08;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .success-container {
+      max-width: 680px;
+      margin: 60px auto;
+      padding: 0 20px;
+      text-align: center;
+      flex: 1;
+    }
+    .success-card {
+      background: #16120e;
+      border: 1px solid rgba(184,130,30,0.4);
+      border-radius: 16px;
+      padding: 42px 32px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.85);
+      position: relative;
+      overflow: hidden;
+    }
+    .success-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #B8821E, #E8A93C, #B8821E);
+    }
+    .check-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(184,130,30,0.15);
+      color: #E8A93C;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 24px;
+      border: 2px solid #B8821E;
+      box-shadow: 0 0 30px rgba(184,130,30,0.3);
+    }
+    .success-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .success-sub {
+      color: #aaa;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+    .access-box {
+      background: #201811;
+      border: 1px dashed #B8821E;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 28px;
+    }
+    .access-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+      margin-bottom: 6px;
+    }
+    .access-code {
+      font-family: monospace;
+      font-size: 26px;
+      font-weight: 700;
+      color: #E8A93C;
+      letter-spacing: 3px;
+    }
+    .btn-download-gold {
+      display: inline-block;
+      width: 100%;
+      background: linear-gradient(135deg, #B8821E, #E8A93C);
+      color: #111;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 16px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      box-shadow: 0 8px 25px rgba(184,130,30,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-download-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(184,130,30,0.6);
+    }
+    .order-details {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid #2a2016;
+      text-align: left;
+      font-size: 13.5px;
+      color: #888;
+    }
+    .order-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .order-row strong {
+      color: #ddd;
+    }
+    .support-note {
+      margin-top: 30px;
+      font-size: 13px;
+      color: #666;
+    }
+    .support-note a {
+      color: #E8A93C;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header minimal -->
+  <header style="padding: 24px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
+    <a href="/" style="font-family: 'Playfair Display', serif; font-size: 24px; color: #fff; text-decoration: none; font-weight: bold;">
+      <span style="color: #E8A93C;">Psy</span>Décode
+    </a>
+  </header>
+
+  <div class="success-container">
+    <div class="success-card">
+      <div class="check-icon">✓</div>
+      
+      <h1 class="success-title">Paiement Validé avec Succès !</h1>
+      <p class="success-sub">
+        Félicitations pour votre décision. Votre accès à votre programme privé est débloqué dès maintenant.
+      </p>
+
+      <div class="access-box">
+        <div class="access-label">Votre Clé d'Accès Sécurisée :</div>
+        <div class="access-code" id="display-access-code">PSY-CHARGEMENT</div>
+        <div style="font-size: 11.5px; color: #777; margin-top: 6px;">Conservez précieusement ce code pour vos futurs accès VIP.</div>
+      </div>
+
+      <a id="btn-main-download" href="/images/article-seduction.jpg" download class="btn-download-gold">
+        ⬇️ Télécharger Mon Guide Immédiatement (PDF)
+      </a>
+
+      <div class="order-details">
+        <div class="order-row">
+          <span>Produit :</span>
+          <strong id="display-product-name">Guide / Formation PsyDécode</strong>
+        </div>
+        <div class="order-row">
+          <span>Numéro de commande :</span>
+          <strong id="display-order-id">CMD-XXXXXX</strong>
+        </div>
+        <div class="order-row">
+          <span>Statut :</span>
+          <strong style="color: #2ecc71;">● Confirmé & Sécurisé</strong>
+        </div>
+        <div class="order-row">
+          <span>Accès :</span>
+          <strong style="color: #E8A93C;">Instantané et Illimité</strong>
+        </div>
+      </div>
+
+      <div class="support-note">
+        Besoin d'aide ? Contactez notre support VIP à <a href="mailto:contact@psydecode.club">contact@psydecode.club</a>
+      </div>
+    </div>
+
+    <div style="margin-top: 24px;">
+      <a href="/" style="color: #888; font-size: 13.5px; text-decoration: none;">← Retourner à l'accueil du site</a>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const params = new URLSearchParams(window.location.search);
+      const orderId = params.get('order_id') || params.get('orderId');
+      const sessionId = params.get('session_id') || params.get('sessionId');
+
+      if (!orderId && !sessionId) return;
+
+      const endpoint = `/api/checkout-status?${orderId ? 'order_id=' + encodeURIComponent(orderId) : 'session_id=' + encodeURIComponent(sessionId)}`;
+      let pollAttempts = 0;
+      const maxAttempts = 20;
+
+      async function checkStatus() {
+        try {
+          const res = await fetch(endpoint);
+          const data = await res.json();
+
+          if (res.ok && data.success) {
+            if (data.orderId) {
+              document.getElementById('display-order-id').textContent = data.orderId;
+            }
+            if (data.productName) {
+              document.getElementById('display-product-name').textContent = data.productName;
+            }
+
+            if (data.status === 'completed') {
+              if (data.accessCode) {
+                document.getElementById('display-access-code').textContent = data.accessCode;
+              }
+              if (data.downloadUrl) {
+                document.getElementById('btn-main-download').href = data.downloadUrl;
+              }
+              return true;
+            } else {
+              // Still pending
+              document.getElementById('display-access-code').innerHTML = '<span style="font-size:16px; color:#E8A93C;">⏳ Validation bancaire en cours...</span>';
+              pollAttempts++;
+              if (pollAttempts < maxAttempts) {
+                setTimeout(checkStatus, 2500);
+              } else {
+                document.getElementById('display-access-code').innerHTML = '<span style="font-size:15px; color:#bbb;">En attente de confirmation bancaire. Rafraîchissez cette page dans un instant.</span>';
+              }
+              return false;
+            }
+          }
+        } catch (e) {
+          console.error('Error fetching order status', e);
+        }
+      }
+
+      checkStatus();
+    });
+  </script>
+
+</body>
+</html>

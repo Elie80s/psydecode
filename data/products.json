@@ -1,0 +1,86 @@
+[
+  {
+    "id": "prod-1",
+    "name": "Le Code de la Séduction Silencieuse",
+    "subtitle": "Guide Pratique & Neurobiologique de l'Attraction Non-Verbale",
+    "format": "E-book PDF + Fiches Réflexes (184 pages)",
+    "price": 27,
+    "originalPrice": 49,
+    "badge": "BESTSELLER",
+    "category": "ebook",
+    "image": "/images/article-seduction.jpg",
+    "description": "Le protocole complet en 6 étapes pour maîtriser le contact visuel, la proxémie et le magnétisme vocal sans jamais paraître artificiel.",
+    "features": [
+      "184 pages richement illustrées d'analyses concrètes",
+      "12 protocoles de calibration en situation réelle",
+      "Fiche mémo smartphone plastifiable à emporter",
+      "Accès immédiat par téléchargement PDF sécurisé"
+    ],
+    "downloadUrl": "#telechargement-guide-seduction-silencieuse",
+    "salesCount": 1241,
+    "rating": 4.9
+  },
+  {
+    "id": "prod-2",
+    "name": "Radar Anti-Manipulation & Profilage Mental",
+    "subtitle": "La méthode infaillible pour démasquer les pervers narcissiques et manipulateurs",
+    "format": "Masterclass Vidéo (3h30) + Guide PDF",
+    "price": 47,
+    "originalPrice": 89,
+    "badge": "NOUVEAU",
+    "category": "formation",
+    "image": "/images/article-manipulation.jpg",
+    "description": "Apprenez à scanner les intentions cachées en moins de 10 minutes d'échange et bâtissez une forteresse psychologique imprenable.",
+    "features": [
+      "3h30 de cours vidéo HD chapitré avec études de cas réelles",
+      "Matrice d'évaluation du profil toxique en 25 questions",
+      "Scripts de réponses désarmantes mot à mot",
+      "Mises à jour à vie et support dédié par email"
+    ],
+    "downloadUrl": "#acces-masterclass-anti-manipulation",
+    "salesCount": 831,
+    "rating": 5
+  },
+  {
+    "id": "prod-3",
+    "name": "Charisme Alpha & Voix Hypnotique",
+    "subtitle": "Reprogrammez votre présence scénique, votre débit et votre assurance sociale",
+    "format": "Programme Audio & Exercices Quotidiens",
+    "price": 37,
+    "originalPrice": 65,
+    "badge": "POPULAIRE",
+    "category": "audio",
+    "image": "/images/article-confidence.jpg",
+    "description": "21 jours d'entraînements audio de 10 minutes pour poser votre voix, éliminer les tics anxieux et commander le respect dans n'importe quelle pièce.",
+    "features": [
+      "21 modules audio au format MP3 haute fidélité",
+      "Exercices de pose de voix inspirés des meilleurs orateurs",
+      "Techniques de respiration diaphragmatique sous tension",
+      "Téléchargeable sur smartphone & tablette"
+    ],
+    "downloadUrl": "#acces-charisme-alpha",
+    "salesCount": 945,
+    "rating": 4.8
+  },
+  {
+    "id": "prod-4",
+    "name": "Pack Ultime : L'Intégrale PsyDécode",
+    "subtitle": "Tous nos programmes + Coaching d'analyse de profil par message vocal privé",
+    "format": "Bundle Complet (3 Formations + 2 Ebooks + VIP)",
+    "price": 87,
+    "originalPrice": 203,
+    "badge": "OFFRE LIMITÉE -57%",
+    "category": "bundle",
+    "image": "/images/hero.jpg",
+    "description": "L'arsenal complet pour dominer les dynamiques relationnelles, attirer avec aisance et ne plus jamais douter de votre valeur perçue.",
+    "features": [
+      "L'intégralité des 3 programmes ci-dessus réunis",
+      "Bonus exclusif : Le Guide des Messages Texte Irrésistibles",
+      "Accès au canal privé Telegram réservé aux membres VIP",
+      "Garantie satisfait ou remboursé 30 jours sans discussion"
+    ],
+    "downloadUrl": "#acces-pack-integral",
+    "salesCount": 1620,
+    "rating": 4.95
+  }
+]
